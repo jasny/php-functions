@@ -5,7 +5,9 @@ php:
   - 5.5
   - 5.6
   
-script: phpunit --coverage-text
- 
 before_script:
   - composer install
+  
+after_success:
+  - php vendor/bin/coveralls
+
