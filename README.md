@@ -68,7 +68,7 @@ Turn a sentence, CamelCase or snake_case into **kabab-case**.
 
 #### ip\_in\_cidr
 
-    boolean ip_in_cidr($ip, $cidr)
+    boolean ip_in_cidr(string $ip, string $cidr)
     
 Check if an IP is in a [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) block.
 
