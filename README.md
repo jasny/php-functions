@@ -2,6 +2,7 @@ Jasny's PHP functions
 =====================
 
 [![Build Status](https://travis-ci.org/jasny/php-functions.svg?branch=master)](https://travis-ci.org/jasny/php-functions)
+[![Coverage Status](https://coveralls.io/repos/jasny/php-functions/badge.svg?branch=master&service=github)](https://coveralls.io/github/jasny/php-functions?branch=master)
 
 A set of useful PHP functions.
 
