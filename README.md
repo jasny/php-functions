@@ -72,3 +72,14 @@ Turn a sentence, CamelCase or snake_case into **kabab-case**.
     
 Check if an IP is in a [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) block.
 
+
+## File functions
+
+#### str\_in\_file
+
+    boolean str_in_file(string $filename, string $string)
+    
+Check if a string is present in the contents of a file.
+
+This function is memory usage friendly by not loading the whole contents of the file at once.
+
