@@ -32,3 +32,26 @@ function str_in_file($filename, $str)
     return $valid;
 }
 
+/**
+ * Match path against wildcard pattern.
+ * 
+ * @param string $pattern
+ * @param string $path
+ * @return boolean
+ */
+function fnmatch_extended($pattern, $path)
+{
+    $quoted = preg_quote($pattern, '~');
+    
+    $step1 = strtr($quoted, ['\?' => '[^/]', '\*' => '[^/]*', '/\*\*' => '(?:/.*)?', '#' => '\d+', '\[' => '[',
+        '\]' => ']', '\-' => '-', '\{' => '{', '\}' => '}']);
+    
+    $step2 = preg_replace_callback('~{[^}]+}~', function($part) {
+        return '(?:' . substr(strtr($part[0], ',', '|'), 1, -1) . ')';
+    }, $step1);
+    
+    $regex = rawurldecode($step2);
+
+    return (boolean)preg_match("~^{$regex}$~", $path);
+}
+
