@@ -1,9 +1,11 @@
 <?php
 
+namespace Jasny;
+
 /**
  * Test server functions
  */
-class ServerFunctionsTest extends PHPUnit_Framework_TestCase
+class ServerFunctionsTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * test ip_in_cidr

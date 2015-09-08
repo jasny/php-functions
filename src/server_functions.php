@@ -1,5 +1,7 @@
 <?php
 
+namespace Jasny;
+
 /**
  * Check if an IP is in CIDR block
  * 

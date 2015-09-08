@@ -1,9 +1,11 @@
 <?php
 
+namespace Jasny;
+
 /**
  * Test array functions
  */
-class ArrayFunctionsTest extends PHPUnit_Framework_TestCase
+class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * test extract_keys

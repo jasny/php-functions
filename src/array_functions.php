@@ -1,5 +1,7 @@
 <?php
 
+namespace Jasny;
+
 /**
  * Get items from array.
  * 

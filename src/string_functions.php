@@ -1,5 +1,7 @@
 <?php
 
+namespace Jasny;
+
 /**
  * Turn a sentence, snake_case or kabab-case into CamelCase
  * 

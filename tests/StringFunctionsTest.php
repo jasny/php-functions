@@ -1,9 +1,11 @@
 <?php
 
+namespace Jasny;
+
 /**
  * Test server functions
  */
-class StringFunctionsTest extends PHPUnit_Framework_TestCase
+class StringFunctionsTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * test camelcase

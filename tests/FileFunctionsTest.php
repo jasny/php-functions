@@ -1,11 +1,13 @@
 <?php
 
+namespace Jasny;
+
 use org\bovigo\vfs\vfsStream;
 
 /**
  * Test server functions
  */
-class FileFunctionsTest extends PHPUnit_Framework_TestCase
+class FileFunctionsTest extends \PHPUnit_Framework_TestCase
 {
     private $root;
     

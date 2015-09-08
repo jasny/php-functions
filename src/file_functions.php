@@ -1,5 +1,7 @@
 <?php
 
+namespace Jasny;
+
 /**
  * Check if the file contains the specified string
  *
