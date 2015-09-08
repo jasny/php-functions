@@ -3,43 +3,66 @@
 namespace Jasny;
 
 /**
- * Test server functions
+ * Test string functions
  */
 class StringFunctionsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * test camelcase
+     * test str_starts_with
      */
-    public function testCamelcase()
+    public function testStrStartsWith()
     {
-        $this->assertEquals('FooBar', camelcase('foo bar'));
-        $this->assertEquals('FooBar', camelcase('foo-bar'));
-        $this->assertEquals('FooBar', camelcase('foo_bar'));
-        $this->assertEquals('FooBarBazQUX', camelcase('foo - bar, .Baz QUX'));
+        $this->assertTrue(str_starts_with('foobar', 'foo'));
+        $this->assertTrue(str_starts_with('foobar', 'foobar'));
         
-        $this->assertEquals('fooBar', camelcase('foo bar', false));
+        $this->assertFalse(str_starts_with('foobar', 'qux'));
+        $this->assertFalse(str_starts_with('foobar', 'bar'));
+        $this->assertFalse(str_starts_with('foobar', 'oba'));        
+        $this->assertFalse(str_starts_with('foobar', 'foobarqux'));
     }
     
     /**
-     * test snakecase
+     * test str_ends_with
      */
-    public function testSnakecase()
+    public function testStrEndsWith()
     {
-        $this->assertEquals('foo_bar', snakecase('foo bar'));
-        $this->assertEquals('foo_bar', snakecase('FooBar'));
-        $this->assertEquals('foo_bar', snakecase('foo_bar'));
-        $this->assertEquals('foo_bar_baz_qux', snakecase('fooBar, .Baz__QUX'));
+        $this->assertTrue(str_ends_with('foobar', 'bar'));
+        $this->assertTrue(str_ends_with('foobar', 'foobar'));
+        
+        $this->assertFalse(str_ends_with('foobar', 'qux'));
+        $this->assertFalse(str_ends_with('foobar', 'foo'));
+        $this->assertFalse(str_ends_with('foobar', 'oba'));        
+        $this->assertFalse(str_ends_with('foobar', 'quxfoobar'));
     }
     
     /**
-     * test kababcase
+     * test str_contains
      */
-    public function testKababcase()
+    public function testStrContains()
     {
-        $this->assertEquals('foo-bar', kababcase('foo bar'));
-        $this->assertEquals('foo-bar', kababcase('FooBar'));
-        $this->assertEquals('foo-bar', kababcase('foo_bar'));
-        $this->assertEquals('foo-bar-baz-qux', kababcase('fooBar, .Baz--QUX'));
+        $this->assertTrue(str_contains('foobar', 'oba'));
+        $this->assertTrue(str_contains('foobar', 'foo'));
+        $this->assertTrue(str_contains('foobar', 'bar'));
+        $this->assertTrue(str_contains('foobar', 'foobar'));
+                
+        $this->assertFalse(str_contains('foobar', 'qux'));
+        $this->assertFalse(str_contains('foobar', 'quxfoobar'));
+    }
+    
+    /**
+     * test str_remove_accents
+     */
+    public function testStrRemoveAccents()
+    {
+        $this->assertSame('abcdehij', str_remove_accents('ábcdëhĳ'));
+    }
+    
+    /**
+     * test str_slug
+     */
+    public function testStrSlug()
+    {
+        $this->assertSame('john-doe-master-ruler', str_slug('John Doé - master & ruler'));
     }
 }
 

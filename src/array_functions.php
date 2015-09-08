@@ -3,9 +3,12 @@
 namespace Jasny;
 
 /**
- * Get items from array.
- * 
- * @example list($foo, $bar, $useAll) = extract_keys($_GET, ['foo', 'bar', 'all' => false]);
+ * Get items from an array.
+ * Set default values using [key => value].
+ *
+ * <code>
+ *   list($foo, $bar, $useAll) = extract_keys($_GET, ['foo', 'bar', 'all' => false]);
+ * </cody>
  * 
  * @param array $array
  * @param array $keys
@@ -35,8 +38,6 @@ function array_unset(array &$array, $key)
 {
     foreach ($array as &$item) {
         if (is_object($item)) {
-            $item = clone $item;
-            
             foreach ((array)$key as $k) {
                 if (isset($item->$k)) unset($item->$k);
             }
@@ -47,3 +48,17 @@ function array_unset(array &$array, $key)
         }
     }
 }
+
+/**
+ * Return an array with only the specified keys.
+ *
+ * @param array $array
+ * @param array $keys
+ * @return array
+ */
+function array_only(array $array, array $keys)
+{
+    $intersect = array_fill_keys($keys, null);
+    return array_intersect_key($array, $intersect);
+}
+

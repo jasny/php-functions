@@ -9,7 +9,7 @@ namespace Jasny;
  * @string $str
  * @return boolean
  */
-function str_in_file($filename, $str)
+function file_contains($filename, $str)
 {
     $handle = fopen($filename, 'r');
     if (!$handle) return false;
@@ -41,7 +41,7 @@ function str_in_file($filename, $str)
  * @param string $path
  * @return boolean
  */
-function fnmatch_extended($pattern, $path)
+function fnmatch($pattern, $path)
 {
     $quoted = preg_quote($pattern, '~');
     

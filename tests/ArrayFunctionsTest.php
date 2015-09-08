@@ -31,7 +31,7 @@ class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
             ['foo' => 3, 'bar' => 40],
             ['foo' => 4, 'qux' => 99]
         ];
-    
+        
         $expect = [
             ['foo' => 1, 'qux' => 99],
             ['foo' => 2, 'qux' => 99],
@@ -40,7 +40,7 @@ class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
         ];
         
         array_unset($array, 'bar');
-        $this->assertEquals($expect, $array);
+        $this->assertSame($expect, $array);
     }
     
     /**
@@ -63,9 +63,20 @@ class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
         ];
         
         array_unset($array, 'bar');
-        $this->assertEquals($expect, $array);
         
-        $this->assertEquals($t1, (object)['foo' => 1, 'bar' => 20, 'qux' => 99], "Original hasn't changed");
+        $this->assertEquals($expect, $array);
+        $this->assertEquals($t1, $array[0]);
+    }
+    
+    /**
+     * test array_only
+     */
+    function testArrayOnly()
+    {
+        $array = ['foo' => 1, 'bar' => 20, 'qux' => 99];
+        $expect = ['foo' => 1, 'bar' => 20];
+        
+        $this->assertSame($expect, array_only($array, ['bar', 'foo', 'jazz']));
     }
 }
 

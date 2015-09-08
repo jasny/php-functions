@@ -2,28 +2,38 @@ Jasny's PHP functions
 =====================
 
 [![Build Status](https://travis-ci.org/jasny/php-functions.svg?branch=master)](https://travis-ci.org/jasny/php-functions)
-[![Coverage Status](https://coveralls.io/repos/jasny/php-functions/badge.svg?branch=master&service=github)](https://coveralls.io/github/jasny/php-functions?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/jasny/php-functions/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jasny/php-functions/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jasny/php-functions/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jasny/php-functions/?branch=master)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/79f3ee18-e8fc-4c7f-8b97-35d04c47a65c/mini.png)](https://insight.sensiolabs.com/projects/79f3ee18-e8fc-4c7f-8b97-35d04c47a65c)
 
 A set of useful PHP functions.
 
+**All functions are in the `Jasny` namespace.**
+
+```php
+use function Jasny\str_contains; // Import functions
+
+str_contains('moonrise', 'on');
+Jasny\slug('Foo bár'); // or use directly
+```
+
 ## Installation
 
-    composer require jasny\php-functins
+    composer require jasny\php-functions
 
 ## Array functions
 
-#### array_column
-
-    array array_column(array $input, mixed $columnKey[, mixed $indexKey]
-    
-This function is a polyfill for [`array_column()`](http://php.net/array_column) for PHP earlier than 5.5. Provided by
-[ramsey/array_column](https://github.com/ramsey/array_column).
-
 #### array_unset
 
-    void array_unset(array &$array, string $key)
+    array_unset(array &$array, string $key)
 
 Walk through the array and unset an item with the key. Clones object, so the original aren't modified.
+
+#### array_only
+
+    array array_only(array $array, string $key)
+
+Return an array with only the specified keys.
 
 #### extract_keys
 
@@ -43,25 +53,68 @@ list($foo, $bar, $useAll) = extract_keys($_GET, ['foo', 'bar', 'all' => false]);
 
 ## String functions
 
+#### str_starts_with
+
+    boolean str_starts_with(string $string, $string $substr)
+    
+Check if a string starts with a substring.
+
+#### str_ends_with
+
+    boolean str_ends_with(string $string, string $substr)
+
+Check if a string ends with a substring.
+
+#### str_contains
+
+    boolean str_contains(string $string, string $substr)
+    
+Check if a string contains a substring.
+
+#### str_remove_accents
+
+    string str_remove_accents(string $string)
+    
+Replace characters with accents with normal characters.
+
+#### str_slug
+
+    string str_slug(string $string, string $glue = '-')
+    
+Generate a URL friendly slug from the given string.
+
+
+## Cast functions
+
 #### camelcase
 
-    string camelcase(string $string, $ucfirst = true)
+    string camelcase(string $string)
 
-Turn a sentence, snake_case or kabab-case into **CamelCase**.
+Turn a sentence, StudlyCase, snake_case or kabab-case into **camelCase**.
 
-Set `$ucfirst` to false to start with a lower case character.
+#### studlycase
+
+    string studlycase(string $string, $ucfirst = true)
+
+Turn a sentence, camelCase, snake_case or kabab-case into **StudlyCase**.
 
 #### snakecase
 
     string snakecase(string $string)
 
-Turn a sentence, CamelCase or kabab-case into **snake_case**.
+Turn a sentence, StudlyCase, camelCase or kabab-case into **snake_case**.
 
 #### kababcase
 
     string kababcase(string $string)
 
-Turn a sentence, CamelCase or snake_case into **kabab-case**.
+Turn a sentence, StudlyCase, camelCase or snake_case into **kabab-case**.
+
+#### uncase
+
+    string uncase(string $string)
+
+Turn StudlyCase, camelCase, snake_case or kabab-case into a **sentence**.
 
 
 ## Server functions
@@ -75,17 +128,17 @@ Check if an IP is in a [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Doma
 
 ## File functions
 
-#### str\_in\_file
+#### file_contains
 
-    boolean str_in_file(string $filename, string $string)
+    boolean file_contains(string $filename, string $string)
     
 Check if a string is present in the contents of a file.
 
 This function is memory usage friendly by not loading the whole contents of the file at once.
 
-#### fnmatch\_extended
+#### fnmatch
 
-    fnmatch_extended(string $pattern, string $path)
+    fnmatch(string $pattern, string $path)
     
 Match path against wildcard pattern. This is an extended version of [fnmatch](http://php.net/fnmatch).
 
