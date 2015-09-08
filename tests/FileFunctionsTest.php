@@ -29,7 +29,7 @@ class FileFunctionsTest extends \PHPUnit_Framework_TestCase
         
         $this->assertFalse(str_in_file($file, "foobar"), "foobar");
         
-        $this->assertTrue(str_in_file($file, substr($text, 140, 300)), 'long sub string');
+        $this->assertTrue(str_in_file($file, substr($text, 140, 400)), 'long sub string');
     }
     
     /**

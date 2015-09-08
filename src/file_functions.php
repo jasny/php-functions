@@ -20,7 +20,7 @@ function str_in_file($filename, $str)
     $prev = '';
     
     while (!feof($handle)) {
-        $cur = fread($handle, 256);
+        $cur = fread($handle, $len);
         
         if (strpos($prev . $cur, $str) !== false) {
             $valid = true;
