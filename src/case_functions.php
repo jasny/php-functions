@@ -4,7 +4,7 @@ namespace Jasny;
 
 /**
  * Turn a sentence, camelCase, snake_case or kabab-case into camelCase
- * 
+ *
  * @param string $string
  * @return string
  */
@@ -16,7 +16,7 @@ function camelcase($string)
 
 /**
  * Turn a sentence, camelCase, snake_case or kabab-case into StudlyCase
- * 
+ *
  * @param string $string
  * @return string
  */
@@ -28,7 +28,7 @@ function studlycase($string)
 
 /**
  * Turn a sentence, camelCase, StudlyCase or kabab-case into snake_case
- * 
+ *
  * @param string $string
  * @return string
  */
@@ -40,7 +40,7 @@ function snakecase($string)
 
 /**
  * Turn a sentence, camelCase, StudlyCase or snake_case into kabab-case
- * 
+ *
  * @param string $string
  * @return string
  */
@@ -64,4 +64,3 @@ function uncase($string)
     
     return $sentence;
 }
-

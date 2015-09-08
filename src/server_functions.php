@@ -4,7 +4,7 @@ namespace Jasny;
 
 /**
  * Check if an IP is in CIDR block
- * 
+ *
  * @param string $ip
  * @param string $cidr
  * @return boolean

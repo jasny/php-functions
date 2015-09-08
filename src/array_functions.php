@@ -9,7 +9,7 @@ namespace Jasny;
  * <code>
  *   list($foo, $bar, $useAll) = extract_keys($_GET, ['foo', 'bar', 'all' => false]);
  * </cody>
- * 
+ *
  * @param array $array
  * @param array $keys
  * @return array
@@ -30,7 +30,7 @@ function extract_keys(array $array, array $keys)
 
 /**
  * Walk through the array and unset an item with the key
- * 
+ *
  * @param array        $array  Array with objects or arrays
  * @param string|array $key
  */
@@ -61,4 +61,3 @@ function array_only(array $array, array $keys)
     $intersect = array_fill_keys($keys, null);
     return array_intersect_key($array, $intersect);
 }
-

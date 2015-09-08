@@ -36,7 +36,7 @@ function file_contains($filename, $str)
 
 /**
  * Match path against wildcard pattern.
- * 
+ *
  * @param string $pattern
  * @param string $path
  * @return boolean
@@ -48,7 +48,7 @@ function fnmatch($pattern, $path)
     $step1 = strtr($quoted, ['\?' => '[^/]', '\*' => '[^/]*', '/\*\*' => '(?:/.*)?', '#' => '\d+', '\[' => '[',
         '\]' => ']', '\-' => '-', '\{' => '{', '\}' => '}']);
     
-    $step2 = preg_replace_callback('~{[^}]+}~', function($part) {
+    $step2 = preg_replace_callback('~{[^}]+}~', function ($part) {
         return '(?:' . substr(strtr($part[0], ',', '|'), 1, -1) . ')';
     }, $step1);
     
@@ -56,4 +56,3 @@ function fnmatch($pattern, $path)
 
     return (boolean)preg_match("~^{$regex}$~", $path);
 }
-
