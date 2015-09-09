@@ -35,6 +35,12 @@ Walk through the array and unset an item with the key. Clones object, so the ori
 
 Return an array with only the specified keys.
 
+#### array_without
+
+    array array_without(array $array, string $key)
+
+Return an array without the specified keys.
+
 #### extract_keys
 
     array extract_keys(array $array, array $keys)

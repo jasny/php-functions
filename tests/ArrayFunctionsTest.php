@@ -73,10 +73,21 @@ class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
      */
     function testArrayOnly()
     {
-        $array = ['foo' => 1, 'bar' => 20, 'qux' => 99];
+        $array = ['baz' => null, 'foo' => 1, 'bar' => 20, 'qux' => 99];
         $expect = ['foo' => 1, 'bar' => 20];
         
         $this->assertSame($expect, array_only($array, ['bar', 'foo', 'jazz']));
+    }
+    
+    /**
+     * test array_without
+     */
+    function testArrayWithout()
+    {
+        $array = ['baz' => null, 'foo' => 1, 'bar' => 20, 'qux' => 99];
+        $expect = ['baz' => null, 'qux' => 99];
+        
+        $this->assertSame($expect, array_without($array, ['bar', 'foo', 'jazz']));
     }
 }
 

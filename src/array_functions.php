@@ -61,3 +61,16 @@ function array_only(array $array, array $keys)
     $intersect = array_fill_keys($keys, null);
     return array_intersect_key($array, $intersect);
 }
+
+/**
+ * Return an array without the specified keys.
+ *
+ * @param array $array
+ * @param array $keys
+ * @return array
+ */
+function array_without(array $array, array $keys)
+{
+    $intersect = array_fill_keys($keys, null);
+    return array_diff_key($array, $intersect);
+}
