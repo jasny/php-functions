@@ -24,6 +24,7 @@
         "files": [
           "src/array_functions.php",
           "src/case_functions.php",
+          "src/class_functions.php",          
           "src/string_functions.php",
           "src/server_functions.php",
           "src/file_functions.php"
