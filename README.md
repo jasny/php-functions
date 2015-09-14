@@ -155,3 +155,25 @@ Match path against wildcard pattern. This is an extended version of [fnmatch](ht
 * `[abc]` Matches `a`, `b` or `c`
 * `{a,b,c}` Matches `a`, `b` or `c`
 
+
+## Class functions
+
+_Only access private / protected properties and methods for testing and debugging._
+
+#### get\_private\_property
+
+    mixed get_private_property(object $object, string $property);
+
+Get the value of a private or protected property
+
+#### call\_private\_method
+
+    mixed call_private_method(object $object, string $method, ...);
+
+Call a private or protected method
+
+#### call\_private\_property\_array
+
+    mixed call_private_method(object $object, string $method, array $args);
+
+Call a private or protected method, giving the arguments as array
