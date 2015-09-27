@@ -5,8 +5,6 @@ namespace Jasny;
 /**
  * Check if IP address is in CIDR block
  * 
- * @todo Convert IPv4 to IPv6 and visa versa (when possible)
- *
  * @param string $ip
  * @param string $cidr
  * @return boolean
