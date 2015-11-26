@@ -7,14 +7,18 @@ namespace Jasny;
  * 
  * @param object $object
  * @param string $property
+ * @return mixed
  */
 function get_private_property($object, $property)
 {
-    $reflObj = new \ReflectionObject($object);
+    $reflObj = is_object($object) ?
+        new \ReflectionObject($object) :
+        new \ReflectionClass($object);
+
     $reflProp = $reflObj->getProperty($property);
     $reflProp->setAccessible(true);
 
-    return $reflProp->getValue($object);
+    return $reflProp->getValue(is_object($object) ? $object : null);
 }
 
 /**
@@ -23,6 +27,7 @@ function get_private_property($object, $property)
  * @param object $object
  * @param string $method
  * @param mixed  ...
+ * @return mixed
  */
 function call_private_method($object, $method)
 {
@@ -36,12 +41,16 @@ function call_private_method($object, $method)
  * @param object $object
  * @param string $method
  * @param array  $args
+ * @return mixed
  */
 function call_private_method_array($object, $method, array $args)
 {
-    $reflObj = new \ReflectionObject($object);
+    $reflObj = is_object($object) ?
+        new \ReflectionObject($object) :
+        new \ReflectionClass($object);
+
     $reflMethod = $reflObj->getMethod($method);
     $reflMethod->setAccessible(true);
 
-    return $reflMethod->invokeArgs($object, $args);
+    return $reflMethod->invokeArgs(is_object($object) ? $object : null, $args);
 }
