@@ -12,7 +12,7 @@
  * @param array $keys
  * @return array
  */
-function extract_keys(array $array, array $keys);
+function extract_keys(array $array, array $keys)
 {
     return jasny\extract_keys($array, $keys);
 }
@@ -23,7 +23,7 @@ function extract_keys(array $array, array $keys);
  * @param array        $array  Array with objects or arrays
  * @param string|array $key
  */
-function array_unset(array $array, $key);
+function array_unset(array $array, $key)
 {
     return jasny\array_unset($array, $key);
 }
@@ -35,7 +35,7 @@ function array_unset(array $array, $key);
  * @param array $keys
  * @return array
  */
-function array_only(array $array, array $keys);
+function array_only(array $array, array $keys)
 {
     return jasny\array_only($array, $keys);
 }
@@ -47,7 +47,7 @@ function array_only(array $array, array $keys);
  * @param array $keys
  * @return array
  */
-function array_without(array $array, array $keys);
+function array_without(array $array, array $keys)
 {
     return jasny\array_without($array, $keys);
 }
@@ -59,7 +59,7 @@ function array_without(array $array, array $keys);
  * @param string $substr
  * @return boolean
  */
-function str_starts_with($string, $substr);
+function str_starts_with($string, $substr)
 {
     return jasny\str_starts_with($string, $substr);
 }
@@ -71,7 +71,7 @@ function str_starts_with($string, $substr);
  * @param string $substr
  * @return boolean
  */
-function str_ends_with($string, $substr);
+function str_ends_with($string, $substr)
 {
     return jasny\str_ends_with($string, $substr);
 }
@@ -83,7 +83,7 @@ function str_ends_with($string, $substr);
  * @param string $substr
  * @return boolean
  */
-function str_contains($string, $substr);
+function str_contains($string, $substr)
 {
     return jasny\str_contains($string, $substr);
 }
@@ -94,7 +94,7 @@ function str_contains($string, $substr);
  * @param string $string
  * @return string
  */
-function str_remove_accents($string);
+function str_remove_accents($string)
 {
     return jasny\str_remove_accents($string);
 }
@@ -105,7 +105,7 @@ function str_remove_accents($string);
  * @param string $string
  * @return string
  */
-function str_slug($string, $glue -);
+function str_slug($string, $glue = '-')
 {
     return jasny\str_slug($string, $glue);
 }
@@ -117,7 +117,7 @@ function str_slug($string, $glue -);
  * @param string $cidr
  * @return boolean
  */
-function ip_in_cidr($ip, $cidr);
+function ip_in_cidr($ip, $cidr)
 {
     return jasny\ip_in_cidr($ip, $cidr);
 }
@@ -129,7 +129,7 @@ function ip_in_cidr($ip, $cidr);
  * @param string $cidr
  * @return boolean
  */
-function ipv4_in_cidr($ip, $cidr);
+function ipv4_in_cidr($ip, $cidr)
 {
     return jasny\ipv4_in_cidr($ip, $cidr);
 }
@@ -140,7 +140,7 @@ function ipv4_in_cidr($ip, $cidr);
  * @param string $inet
  * @return string
  */
-function inet_to_bits($inet);
+function inet_to_bits($inet)
 {
     return jasny\inet_to_bits($inet);
 }
@@ -152,7 +152,7 @@ function inet_to_bits($inet);
  * @param string $cidr
  * @return boolean
  */
-function ipv6_in_cidr($ip, $cidr);
+function ipv6_in_cidr($ip, $cidr)
 {
     return jasny\ipv6_in_cidr($ip, $cidr);
 }
@@ -164,21 +164,9 @@ function ipv6_in_cidr($ip, $cidr);
  * @string $str
  * @return boolean
  */
-function file_contains($filename, $str);
+function file_contains($filename, $str)
 {
     return jasny\file_contains($filename, $str);
-}
-
-/**
- * Match path against wildcard pattern.
- *
- * @param string $pattern
- * @param string $path
- * @return boolean
- */
-function fnmatch($pattern, $path);
-{
-    return jasny\fnmatch($pattern, $path);
 }
 
 /**
@@ -187,7 +175,7 @@ function fnmatch($pattern, $path);
  * @param string $string
  * @return string
  */
-function camelcase($string);
+function camelcase($string)
 {
     return jasny\camelcase($string);
 }
@@ -198,7 +186,7 @@ function camelcase($string);
  * @param string $string
  * @return string
  */
-function studlycase($string);
+function studlycase($string)
 {
     return jasny\studlycase($string);
 }
@@ -209,7 +197,7 @@ function studlycase($string);
  * @param string $string
  * @return string
  */
-function snakecase($string);
+function snakecase($string)
 {
     return jasny\snakecase($string);
 }
@@ -220,7 +208,7 @@ function snakecase($string);
  * @param string $string
  * @return string
  */
-function kababcase($string);
+function kababcase($string)
 {
     return jasny\kababcase($string);
 }
@@ -231,7 +219,7 @@ function kababcase($string);
  * @param string $string
  * @return string
  */
-function uncase($string);
+function uncase($string)
 {
     return jasny\uncase($string);
 }
@@ -243,7 +231,7 @@ function uncase($string);
  * @param string $property
  * @return mixed
  */
-function get_private_property($object, $property);
+function get_private_property($object, $property)
 {
     return jasny\get_private_property($object, $property);
 }
@@ -256,7 +244,7 @@ function get_private_property($object, $property);
  * @param mixed  ...
  * @return mixed
  */
-function call_private_method($object, $method);
+function call_private_method($object, $method)
 {
     return jasny\call_private_method($object, $method);
 }
@@ -269,7 +257,7 @@ function call_private_method($object, $method);
  * @param array  $args
  * @return mixed
  */
-function call_private_method_array($object, $method, array $args);
+function call_private_method_array($object, $method, array $args)
 {
     return jasny\call_private_method_array($object, $method, $args);
 }

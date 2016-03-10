@@ -27,13 +27,15 @@ foreach ($jasnyFunctions as $function) {
     $globfn = substr($function, strlen('jasny\\'));
     if (strpos($globfn, '\\') !== false) continue;
     
+    if (function_exists($globfn)) continue;
+    
     $reflParams = $refl->getParameters();
     foreach ($reflParams as $param) {
         $params[] = join(' ', array_filter([
             $param->getClass(),
             $param->isArray() ? 'array' : null,
             '$' . $param->getName(),
-            $param->isDefaultValueAvailable() ? $param->getDefaultValue() : null
+            $param->isDefaultValueAvailable() ? '= ' . var_export($param->getDefaultValue(), true) : null
         ]));
         
         $args[] = '$' . $param->getName();
@@ -44,7 +46,7 @@ foreach ($jasnyFunctions as $function) {
     
     $code[] = <<<CODE
 $doc
-function $globfn($paramStr);
+function $globfn($paramStr)
 {
     return $function($argsStr);
 }
