@@ -35,13 +35,13 @@ function file_contains($filename, $str)
 }
 
 /**
- * Match path against wildcard pattern.
+ * Match path against an extended wildcard pattern.
  *
  * @param string $pattern
  * @param string $path
  * @return boolean
  */
-function fnmatch($pattern, $path)
+function fnmatch_extended($pattern, $path)
 {
     $quoted = preg_quote($pattern, '~');
     

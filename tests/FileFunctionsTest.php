@@ -9,14 +9,17 @@ use org\bovigo\vfs\vfsStream;
  */
 class FileFunctionsTest extends \PHPUnit_Framework_TestCase
 {
-    private $root;
+    /**
+     * @var \org\bovigo\vfs\vfsStreamDirectory
+     */
+    protected $root;
     
     public function setUp() {
         $this->root = vfsStream::setup();
     }
     
     /**
-     * test file_contains
+     * @covers Jasny\file_contains
      */
     public function testFileContains()
     {
@@ -32,46 +35,59 @@ class FileFunctionsTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(file_contains($file, substr($text, 140, 400)), 'long sub string');
     }
     
-    /**
-     * test fnmatch
-     */
-    public function testFnmatchExtended()
+    
+    public function fnmatchExtendedProvider()
     {
-        // Valid
-        $this->assertTrue(fnmatch('/foo/bar/zoo', '/foo/bar/zoo'));
-        
-        $this->assertTrue(fnmatch('/foo/?ar/zoo', '/foo/bar/zoo'));
-        $this->assertTrue(fnmatch('/foo/*/zoo', '/foo/bar/zoo'));
-        $this->assertTrue(fnmatch('/foo/b*/zoo', '/foo/bar/zoo'));
-        $this->assertTrue(fnmatch('/foo/bar*/zoo', '/foo/bar/zoo'));
-                
-        $this->assertTrue(fnmatch('/foo/bar/#', '/foo/bar/22'));
-        $this->assertTrue(fnmatch('/foo/bar/?#', '/foo/bar/a22'));
-        
-        $this->assertTrue(fnmatch('/foo/**', '/foo/bar/zoo'));
-        $this->assertTrue(fnmatch('/foo/**', '/foo/'));
-        $this->assertTrue(fnmatch('/foo/**', '/foo'));
-                        
-        $this->assertTrue(fnmatch('/foo/{bar,baz}/zoo', '/foo/bar/zoo'));
-        $this->assertTrue(fnmatch('/foo/{12,89}/zoo', '/foo/12/zoo'));
-        $this->assertTrue(fnmatch('/foo/[bc]ar/zoo', '/foo/bar/zoo'));
-        $this->assertTrue(fnmatch('/foo/[a-c]ar/zoo', '/foo/bar/zoo'));
-        
-        // Invalid
-        $this->assertFalse(fnmatch('/foo/qux/zoo', '/foo/bar/zoo'));
-        
-        $this->assertFalse(fnmatch('/foo/?a/zoo', '/foo/bar/zoo'));
-        $this->assertFalse(fnmatch('/foo/*/zoo', '/foo/zoo'));
-        
-        $this->assertFalse(fnmatch('/foo/bar/#', '/foo/bar/n00'));
-        $this->assertFalse(fnmatch('/foo/bar/?#', '/foo/bar/2'));
-        
-        $this->assertFalse(fnmatch('/foo/**', '/foobar/zoo'));
-                
-        $this->assertFalse(fnmatch('/foo/{bar,baz}/zoo', '/foo/{bar,baz}/zoo'));
-        $this->assertFalse(fnmatch('/foo/{12,89}/zoo', '/foo/1289/zoo'));
-        $this->assertFalse(fnmatch('/foo/[bc]ar/zoo', '/foo/dar/zoo'));
-        $this->assertFalse(fnmatch('/foo/[d-q]ar/zoo', '/foo/bar/zoo'));
+        return  [
+            // Valid
+            ['/foo/bar/zoo', '/foo/bar/zoo', true],
+
+            ['/foo/?ar/zoo', '/foo/bar/zoo', true],
+            ['/foo/*/zoo', '/foo/bar/zoo', true],
+            ['/foo/b*/zoo', '/foo/bar/zoo', true],
+            ['/foo/bar*/zoo', '/foo/bar/zoo', true],
+
+            ['/foo/bar/#', '/foo/bar/22', true],
+            ['/foo/bar/?#', '/foo/bar/a22', true],
+
+            ['/foo/**', '/foo/bar/zoo', true],
+            ['/foo/**', '/foo/', true],
+            ['/foo/**', '/foo', true],
+
+            ['/foo/{bar,baz}/zoo', '/foo/bar/zoo', true],
+            ['/foo/{12,89}/zoo', '/foo/12/zoo', true],
+            ['/foo/[bc]ar/zoo', '/foo/bar/zoo', true],
+            ['/foo/[a-c]ar/zoo', '/foo/bar/zoo', true],
+
+            // Invalid
+            ['/foo/qux/zoo', '/foo/bar/zoo', false],
+
+            ['/foo/?a/zoo', '/foo/bar/zoo', false],
+            ['/foo/*/zoo', '/foo/zoo', false],
+
+            ['/foo/bar/#', '/foo/bar/n00', false],
+            ['/foo/bar/?#', '/foo/bar/2', false],
+
+            ['/foo/**', '/foobar/zoo', false],
+
+            ['/foo/{bar,baz}/zoo', '/foo/{bar,baz}/zoo', false],
+            ['/foo/{12,89}/zoo', '/foo/1289/zoo', false],
+            ['/foo/[bc]ar/zoo', '/foo/dar/zoo', false],
+            ['/foo/[d-q]ar/zoo', '/foo/bar/zoo', false]
+        ];
+    }
+    
+    /**
+     * @covers Jasny\fnmatch_extended
+     * @dataProvider fnmatchExtendedProvider
+     * 
+     * @param string  $pattern
+     * @param string  $path
+     * @param boolean $expect
+     */
+    public function testFnmatchExtended($pattern, $path, $expect)
+    {
+        $this->assertEquals($expect, fnmatch_extended($pattern, $path));
     }
 }
 
