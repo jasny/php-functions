@@ -8,40 +8,133 @@ Jasny's PHP functions
 
 A set of useful PHP functions.
 
+
+## Installation
+
+    composer require jasny\php-functions
+
+## Usage
+
 **All functions are in the `Jasny` namespace.**
 
 ```php
 use function Jasny\str_contains; // Import functions
 
 str_contains('moonrise', 'on');
+
 Jasny\slug('Foo bár'); // or use directly
 ```
 
-## Installation
+To import all the functions to the global namespace require 'global.php' anywhere in your application
 
-    composer require jasny\php-functions
+```php
+require_once 'vendor/jasny/php-functions/global.php';
+```
+
+## Type functions
+
+#### is\_associative\_array
+
+    boolean is_associative_array(mixed $var)
+
+Check if variable is an associative array.
+
+#### is\_numeric\_array
+
+    boolean is_numeric_array(mixed $var)
+
+Check if variable is a numeric array.
+
+#### objectify
+
+    stdClass|mixed objectify(array|mixed $var)
+
+Turn associated array into stdClass object recursively.
+
+#### arrayify
+
+    array|mixed arrayify(stdClass|mixed $var)
+
+Turn stdClass object into associated array recursively.
+
 
 ## Array functions
 
-#### array_unset
+#### array\_unset
 
     array_unset(array &$array, string $key)
 
 Walk through the array and unset an item with the key. Clones object, so the original aren't modified.
 
-#### array_only
+#### array\_only
 
     array array_only(array $array, string $key)
 
 Return an array with only the specified keys.
 
-#### array_without
+#### array\_without
 
     array array_without(array $array, string $key)
 
 Return an array without the specified keys.
 
-#### extract_keys
+#### array\_contains
+
+    boolean array_contains(array $array, array $subset, boolean $strict = false)
+
+Check if an array contains a set of values.
+
+_This function works as expected with nested arrays or an array with objects._
+
+#### array\_contains\_assoc
+
+    boolean array_contains_assoc(array $array, array $subset, boolean $strict = false)
+
+Check if an array contains a set of values with index check.
+
+_This function works as expected with nested arrays or an array with objects._
+
+#### array\_flatten
+
+    array function array_flatten(string $glue, array $array)
+
+Flatten a nested associative array, concatenating the keys.
+
+###### Example
+
+```php
+$values = array_flatten('.', [
+    'animal' => [
+        'mammel' => [
+            'ape',
+            'bear'
+        ],
+        'reptile' => 'chameleon'
+    ],
+    'colors' => [
+        'red' => 60,
+        'green' => 100,
+        'blue' => 0
+    ]
+]);
+```
+
+Will become
+
+```php
+[
+    'animal.mammel' => [
+        'ape',
+        'bear'
+    ],
+    'animal.reptile' => 'chameleon',
+    'colors.red' => 60,
+    'colors.green' => 100,
+    'colors.blue' => 0
+]
+```
+
+#### extract\_keys
 
     array extract_keys(array $array, array $keys)
 
@@ -57,33 +150,34 @@ associated item, the key is use as key of `$array` and the value is used as defa
 list($foo, $bar, $useAll) = extract_keys($_GET, ['foo', 'bar', 'all' => false]);
 ```
 
+
 ## String functions
 
-#### str_starts_with
+#### str\_starts\_with
 
     boolean str_starts_with(string $string, $string $substr)
     
 Check if a string starts with a substring.
 
-#### str_ends_with
+#### str\_ends\_with
 
     boolean str_ends_with(string $string, string $substr)
 
 Check if a string ends with a substring.
 
-#### str_contains
+#### str\_contains
 
     boolean str_contains(string $string, string $substr)
     
 Check if a string contains a substring.
 
-#### str_remove_accents
+#### str\_remove\_accents
 
     string str_remove_accents(string $string)
     
 Replace characters with accents with normal characters.
 
-#### str_slug
+#### str\_slug
 
     string str_slug(string $string, string $glue = '-')
     
@@ -129,12 +223,31 @@ Turn StudlyCase, camelCase, snake_case or kabab-case into a **sentence**.
 
     boolean ip_in_cidr(string $ip, string $cidr)
     
-Check if an IP is in a [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) block.
+Check if an IP address is in a [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) block.
 
+_Works with IPv4 and IPv6._
+
+#### ipv4\_in\_cidr
+
+    boolean ipv4_in_cidr(string $ip, string $cidr)
+
+Check if an IPv4 address is in a CIDR block.
+
+#### ipv6\_in\_cidr
+
+    boolean ipv6_in_cidr(string $ip, string $cidr)
+
+Check if an IPv6 address is in a CIDR block.
+
+#### inet\_to\_bits
+
+    string inet_to_bits(string $inet)
+
+Converts inet_pton output to string with bits.
 
 ## File functions
 
-#### file_contains
+#### file\_contains
 
     boolean file_contains(string $filename, string $string)
     
@@ -142,9 +255,9 @@ Check if a string is present in the contents of a file.
 
 This function is memory usage friendly by not loading the whole contents of the file at once.
 
-#### fnmatch
+#### fnmatch\_extended
 
-    fnmatch(string $pattern, string $path)
+    fnmatch_extended(string $pattern, string $path)
     
 Match path against wildcard pattern. This is an extended version of [fnmatch](http://php.net/fnmatch).
 
@@ -153,27 +266,4 @@ Match path against wildcard pattern. This is an extended version of [fnmatch](ht
 * `*` Matches any characters, except `/`
 * `**` Matches any characters
 * `[abc]` Matches `a`, `b` or `c`
-* `{a,b,c}` Matches `a`, `b` or `c`
-
-
-## Class functions
-
-_Only access private / protected properties and methods for testing and debugging._
-
-#### get\_private\_property
-
-    mixed get_private_property(object $object, string $property);
-
-Get the value of a private or protected property
-
-#### call\_private\_method
-
-    mixed call_private_method(object $object, string $method, ...);
-
-Call a private or protected method
-
-#### call\_private\_property\_array
-
-    mixed call_private_method(object $object, string $method, array $args);
-
-Call a private or protected method, giving the arguments as array
+* `{ab,cd,ef}` Matches `ab`, `cd` or `ef`

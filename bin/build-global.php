@@ -2,18 +2,11 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-require_once __DIR__ . '/../src/array_functions.php';
-require_once __DIR__ . '/../src/case_functions.php';
-require_once __DIR__ . '/../src/class_functions.php';
-require_once __DIR__ . '/../src/string_functions.php';
-require_once __DIR__ . '/../src/server_functions.php';
-require_once __DIR__ . '/../src/file_functions.php';
-
 $userFunctions = get_defined_functions()['user'];
 $jasnyFunctions = [];
 
 foreach ($userFunctions as $function) {
-    if (strpos($function, 'jasny\\') === 0) {
+    if (stripos($function, 'jasny\\') === 0) {
         $jasnyFunctions[] = $function;
     }
 }
@@ -56,7 +49,6 @@ CODE;
     unset($params, $args);
 }
 
-file_put_contents(dirname(__DIR__) . '/src/global.php', "<?php\n\n" . join("\n", $code));
+file_put_contents(dirname(__DIR__) . '/global.php', "<?php\n\n" . join("\n", $code));
 
 echo "Created src/global.php\n";
-
