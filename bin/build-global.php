@@ -51,4 +51,4 @@ CODE;
 
 file_put_contents(dirname(__DIR__) . '/global.php', "<?php\n\n" . join("\n", $code));
 
-echo "Created src/global.php\n";
+echo "Created global.php\n";
