@@ -10,7 +10,9 @@ namespace Jasny;
  */
 function is_associative_array($var)
 {
-    if (!is_array($var)) return false;
+    if (!is_array($var)) {
+        return false;
+    }
     
     $keys = array_keys($var);
     return ($keys !== array_keys($keys));
@@ -24,7 +26,9 @@ function is_associative_array($var)
  */
 function is_numeric_array($var)
 {
-    if (!is_array($var)) return false;
+    if (!is_array($var)) {
+        return false;
+    }
     
     $keys = array_keys($var);
     return ($keys === array_keys($keys));
