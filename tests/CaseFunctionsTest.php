@@ -7,64 +7,132 @@ namespace Jasny;
  */
 class CaseFunctionsTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * test camelcase
-     */
-    public function testCamelcase()
+    public function fooBarProvider()
     {
-        $this->assertEquals('fooBar', camelcase('foo bar'));
-        $this->assertEquals('fooBar', camelcase('FooBar'));
-        $this->assertEquals('fooBar', camelcase('foo-bar'));
-        $this->assertEquals('fooBar', camelcase('foo_bar'));
-        $this->assertEquals('fooBarBazQUX', camelcase('foo - bar, .Baz QUX'));
+        return [
+            ['foo bar'],
+            ['fooBar'],
+            ['FooBar'],
+            ['foo-bar'],
+            ['foo_bar']
+        ];
     }
     
     /**
-     * test studly
+     * @covers Jasny\camelcase
+     * @dataProvider fooBarProvider
+     * 
+     * @param string $fooBar
      */
-    public function testStudlycase()
+    public function testCamelcase($fooBar)
     {
-        $this->assertEquals('FooBar', studlycase('foo bar'));
-        $this->assertEquals('FooBar', studlycase('fooBar'));
-        $this->assertEquals('FooBar', studlycase('foo-bar'));
-        $this->assertEquals('FooBar', studlycase('foo_bar'));
-        $this->assertEquals('FooBarBazQUX', studlycase('foo - bar, .Baz QUX'));
+        $this->assertEquals('fooBar', camelcase($fooBar));
     }
     
     /**
-     * test snakecase
+     * @covers Jasny\studlycase
+     * @dataProvider fooBarProvider
+     * 
+     * @param string $fooBar
      */
-    public function testSnakecase()
+    public function testStudlycase($fooBar)
     {
-        $this->assertEquals('foo_bar', snakecase('foo bar'));
-        $this->assertEquals('foo_bar', snakecase('fooBar'));
-        $this->assertEquals('foo_bar', snakecase('FooBar'));
-        $this->assertEquals('foo_bar', snakecase('foo_bar'));
-        $this->assertEquals('foo_bar_baz_qux', snakecase('fooBar, .Baz__QUX'));
+        $this->assertEquals('FooBar', studlycase($fooBar));
     }
     
     /**
-     * test kababcase
+     * @covers Jasny\snakecase
+     * @dataProvider fooBarProvider
+     * 
+     * @param string $fooBar
      */
-    public function testKababcase()
+    public function testSnakecase($fooBar)
     {
-        $this->assertEquals('foo-bar', kababcase('foo bar'));
-        $this->assertEquals('foo-bar', kababcase('fooBar'));
-        $this->assertEquals('foo-bar', kababcase('FooBar'));
-        $this->assertEquals('foo-bar', kababcase('foo_bar'));
-        $this->assertEquals('foo-bar-baz-qux', kababcase('fooBar, .Baz--QUX'));
+        $this->assertEquals('foo_bar', snakecase($fooBar));
     }
     
     /**
-     * test uncase
+     * @covers Jasny\kababcase
+     * @dataProvider fooBarProvider
+     * 
+     * @param string $fooBar
      */
-    public function testUncase()
+    public function testKababcase($fooBar)
     {
-        $this->assertEquals('foo bar', uncase('fooBar'));
-        $this->assertEquals('Foo bar', uncase('FooBar'));
-        $this->assertEquals('foo bar', uncase('foo_bar'));
-        $this->assertEquals('foo bar', uncase('foo-bar'));
-        $this->assertEquals('foo bar, .baz qux', uncase('fooBar, .Baz--QUX'));
+        $this->assertEquals('foo-bar', kababcase($fooBar));
+    }
+    
+    /**
+     * @covers Jasny\uncase
+     * @dataProvider fooBarProvider
+     * 
+     * @param string $fooBar
+     */
+    public function testUncase($fooBar)
+    {
+        $this->assertEquals('foo bar', uncase($fooBar));
+    }
+    
+    
+    public function sentenceProvider()
+    {
+        return [
+            ['fooBar, .Baz--QUX']
+        ];
+    }
+    
+    /**
+     * @covers Jasny\camelcase
+     * @dataProvider sentenceProvider
+     * 
+     * @param string $sentence
+     */
+    public function testCamelcaseWithSentence($sentence)
+    {
+        $this->assertEquals('fooBarBazQUX', camelcase($sentence));
+    }
+    
+    /**
+     * @covers Jasny\studlycase
+     * @dataProvider sentenceProvider
+     * 
+     * @param string $sentence
+     */
+    public function testStudlycaseWithSentence($sentence)
+    {
+        $this->assertEquals('FooBarBazQUX', studlycase($sentence));
+    }
+    
+    /**
+     * @covers Jasny\snakecase
+     * @dataProvider sentenceProvider
+     * 
+     * @param string $sentence
+     */
+    public function testSnakecaseWithSentence($sentence)
+    {
+        $this->assertEquals('foo_bar_baz_qux', snakecase($sentence));
+    }
+    
+    /**
+     * @covers Jasny\kababcase
+     * @dataProvider sentenceProvider
+     * 
+     * @param string $sentence
+     */
+    public function testKababcaseWithSentence($sentence)
+    {
+        $this->assertEquals('foo-bar-baz-qux', kababcase($sentence));
+    }
+    
+    /**
+     * @covers Jasny\uncase
+     * @dataProvider sentenceProvider
+     * 
+     * @param string $sentence
+     */
+    public function testUncaseWithSentence($sentence)
+    {
+        $this->assertEquals('foo bar, .baz qux', uncase($sentence));
     }
 }
-

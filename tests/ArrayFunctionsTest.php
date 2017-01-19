@@ -8,7 +8,7 @@ namespace Jasny;
 class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * test extract_keys
+     * @covers Jasny\extract_keys
      */
     public function testExtractKeys()
     {
@@ -21,9 +21,9 @@ class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * test array_unset with associated arrays
+     * @covers Jasny\array_unset
      */
-    function testArrayUnset_array()
+    public function testArrayUnsetWithArray()
     {
         $array = [
             ['foo' => 1, 'bar' => 20, 'qux' => 99],
@@ -44,9 +44,9 @@ class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * test array_unset with objects
+     * @covers Jasny\array_unset
      */
-    function testArrayUnset_object()
+    public function testArrayUnsetWithObject()
     {
         $t1 = (object)['foo' => 1, 'bar' => 20, 'qux' => 99];
         $t2 = (object)['foo' => 2, 'bar' => 30, 'qux' => 99];
@@ -68,10 +68,11 @@ class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($t1, $array[0]);
     }
     
+    
     /**
-     * test array_only
+     * @covers Jasny\array_only
      */
-    function testArrayOnly()
+    public function testArrayOnly()
     {
         $array = ['baz' => null, 'foo' => 1, 'bar' => 20, 'qux' => 99];
         $expect = ['foo' => 1, 'bar' => 20];
@@ -80,14 +81,174 @@ class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * test array_without
+     * @covers Jasny\array_without
      */
-    function testArrayWithout()
+    public function testArrayWithout()
     {
         $array = ['baz' => null, 'foo' => 1, 'bar' => 20, 'qux' => 99];
         $expect = ['baz' => null, 'qux' => 99];
         
         $this->assertSame($expect, array_without($array, ['bar', 'foo', 'jazz']));
     }
-}
+    
+    
+    /**
+     * @covers Jasny\array_contains
+     */
+    public function testArrayContains()
+    {
+        $this->assertTrue(array_contains(['foo', 'bar', 'baz', 'top'], ['top', 'bar']));
+        $this->assertFalse(array_contains(['foo', 'baz', 'top'], ['top', 'bar']));
+    }
+    
+    /**
+     * @covers Jasny\array_contains
+     */
+    public function testArrayContainsWithNested()
+    {
+        $this->assertTrue(array_contains([['hello', 'world'], 'q', (object)['a' => 'b']], ['q', ['hello', 'world']]));
+        $this->assertTrue(array_contains([['hello', 'world'], 'q', (object)['a' => 'b']], [(object)['a' => 'b']]));
+        
+        $this->assertFalse(array_contains([['hello', 'world'], 'q', (object)['a' => 'b']], ['q', ['hello']]));
+        $this->assertFalse(array_contains(
+            [['hello', 'world'], 'q', (object)['a' => 'b']],
+            ['q', ['hello', 'world', '!']]
+        ));
+    }
+    
+    /**
+     * @covers Jasny\array_contains
+     */
+    public function testArrayContainsWithStrict()
+    {
+        $this->assertTrue(array_contains(['foo', 'bar', true], [1, 'bar']));
+        $this->assertFalse(array_contains(['foo', 'bar', true], [1, 'bar'], true));
+    }
+    
+    
+    /**
+     * @covers Jasny\array_contains_assoc
+     */
+    public function testArrayContainsAssoc()
+    {
+        $this->assertTrue(array_contains_assoc(
+            ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => 3],
+            ['top' => 3, 'bar' => 9]
+        ));
+        
+        $this->assertFalse(array_contains_assoc(
+            ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => 3],
+            ['top' => 3, 'bar' => 7]
+        ));
+    }
+    
+    /**
+     * @covers Jasny\array_contains_assoc
+     */
+    public function testArrayContainsAssocWithNested()
+    {
+        $this->assertTrue(array_contains_assoc(
+            ['greet' => ['hello', 'world'], 'x' => 'q', 'item' => (object)['a' => 'b']],
+            ['x' => 'q', 'greet' => ['hello', 'world']]
+        ));
+        
+        $this->assertTrue(array_contains_assoc(
+            ['greet' => ['hello', 'world'], 'x' => 'q', 'item' => (object)['a' => 'b']],
+            ['x' => 'q', 'item' => (object)['a' => 'b']]
+        ));
+        
+        $this->assertFalse(array_contains_assoc(
+            ['greet' => ['hello', 'world'], 'x' => 'q', 'item' => (object)['a' => 'b']],
+            ['x' => 'q', 'greet' => ['hello', 'world', '!']]
+        ));
+    }
+    
+    /**
+     * @covers Jasny\array_contains_assoc
+     */
+    public function testArrayContainsAssocWithStrict()
+    {
+        $this->assertTrue(array_contains_assoc(
+            ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => true],
+            ['top' => 1, 'bar' => 9]
+        ));
+        
+        $this->assertFalse(array_contains_assoc(
+            ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => true],
+            ['top' => 1, 'bar' => 9],
+            true
+        ));
+    }
 
+    public function arrayFlattenGlueProvider()
+    {
+        $expectDot = [
+            'animal.mammel' => [
+                'ape',
+                'bear'
+            ],
+            'animal.reptile' => 'chameleon',
+            'colors.red' => 60,
+            'colors.green' => 100,
+            'colors.blue' => 0,
+            'topic' => 'green',
+            'a.b.c.d' => 42
+        ];
+
+        $expectDash = [
+            'animal-mammel' => [
+                'ape',
+                'bear'
+            ],
+            'animal-reptile' => 'chameleon',
+            'colors-red' => 60,
+            'colors-green' => 100,
+            'colors-blue' => 0,
+            'topic' => 'green',
+            'a-b-c-d' => 42
+        ];
+        
+        return [
+            [null, $expectDot],
+            ['.', $expectDot],
+            ['-', $expectDash]
+        ];
+    }
+    
+    /**
+     * @covers Jasny\array_flatten
+     * @dataProvider arrayFlattenGlueProvider
+     * 
+     * @param string $glue
+     * @param array  $expect
+     */
+    public function testArrayFlatten($glue, array $expect)
+    {
+        $values = [
+            'animal' => [
+                'mammel' => [
+                    'ape',
+                    'bear'
+                ],
+                'reptile' => 'chameleon'
+            ],
+            'colors' => [
+                'red' => 60,
+                'green' => 100,
+                'blue' => 0
+            ],
+            'topic' => 'green',
+            'a' => [
+                'b' => [
+                    'c' => [
+                        'd' => 42
+                    ]
+                ]
+            ]
+        ];
+
+        $flattened = isset($glue) ? array_flatten($values, $glue) : array_flatten($values);
+        
+        $this->assertEquals($expect, $flattened);
+    }
+}

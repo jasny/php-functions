@@ -12,7 +12,10 @@ namespace Jasny;
 function file_contains($filename, $str)
 {
     $handle = fopen($filename, 'r');
-    if (!$handle) return false;
+
+    if ($handle === false) {
+        return false;
+    }
     
     $valid = false;
     
@@ -35,13 +38,13 @@ function file_contains($filename, $str)
 }
 
 /**
- * Match path against wildcard pattern.
+ * Match path against an extended wildcard pattern.
  *
  * @param string $pattern
  * @param string $path
  * @return boolean
  */
-function fnmatch($pattern, $path)
+function fnmatch_extended($pattern, $path)
 {
     $quoted = preg_quote($pattern, '~');
     
@@ -56,3 +59,4 @@ function fnmatch($pattern, $path)
 
     return (boolean)preg_match("~^{$regex}$~", $path);
 }
+

@@ -15,18 +15,18 @@
         "source": "https://github.com/jasny/php-functions"
     },
     "require": {
-        "php": ">=5.5"
+        "php": ">=5.6"
     },
     "require-dev": {
-        "jasny/php-code-quality": "^1.1"
+        "jasny/php-code-quality": "^2.0"
     },
     "autoload": {
         "files": [
           "src/array_functions.php",
           "src/case_functions.php",
-          "src/class_functions.php",          
           "src/string_functions.php",
           "src/server_functions.php",
+          "src/type_functions.php",          
           "src/file_functions.php"
         ]
     }
