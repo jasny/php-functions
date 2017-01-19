@@ -23,7 +23,7 @@ function ipv4_to_ipv6($ip)
     
     $bytes = array_map('dechex', explode('.', $address));
     
-    return vsprintf('0:0:0:0:0:ffff:%02s%02s:%02s%02s', $bytes) . (isset($mask) ? '/' . ($mask + 96)  : '');
+    return vsprintf('0:0:0:0:0:ffff:%02s%02s:%02s%02s', $bytes) . (isset($mask) ? '/' . ($mask + 96) : '');
 }
 
 /**
