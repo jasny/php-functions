@@ -5,6 +5,10 @@ php:
   - 7.0
   - 7.1
 
+branches:
+  only:
+    - master
+    
 install:
   - composer install
   - wget https://scrutinizer-ci.com/ocular.phar -O "$HOME/ocular.phar"
