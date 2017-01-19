@@ -12,7 +12,10 @@ namespace Jasny;
 function file_contains($filename, $str)
 {
     $handle = fopen($filename, 'r');
-    if (!$handle) return false;
+
+    if ($handle === false) {
+        return false;
+    }
     
     $valid = false;
     

@@ -37,13 +37,13 @@ function extract_keys(array $array, array $keys)
 function array_unset(array &$array, $key)
 {
     foreach ($array as &$item) {
-        if (is_object($item)) {
-            foreach ((array)$key as $k) {
-                if (isset($item->$k)) unset($item->$k);
+        foreach ((array)$key as $k) {
+            if (is_object($item) && isset($item->$k)) {
+                unset($item->$k);
             }
-        } elseif (is_array($item)) {
-            foreach ((array)$key as $k) {
-                if (isset($item[$k])) unset($item[$k]);
+
+            if (is_array($item) && isset($item[$k])) {
+                unset($item[$k]);
             }
         }
     }
@@ -141,3 +141,4 @@ function array_flatten(array $array, $glue = '.')
     
     return $array;
 }
+
