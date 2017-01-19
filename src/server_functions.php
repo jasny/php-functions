@@ -138,4 +138,5 @@ function inet_to_bits($inet)
     }
 
     return str_pad($binaryip, 128, '0', STR_PAD_RIGHT);
-}    
+}
+

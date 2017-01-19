@@ -59,3 +59,4 @@ function fnmatch_extended($pattern, $path)
 
     return (boolean)preg_match("~^{$regex}$~", $path);
 }
+
