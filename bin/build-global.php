@@ -18,20 +18,21 @@ foreach ($jasnyFunctions as $function) {
     $doc = $refl->getDocComment();
     
     $globfn = substr($function, strlen('jasny\\'));
-    if (strpos($globfn, '\\') !== false) continue;
     
-    if (function_exists($globfn)) continue;
+    if (strpos($globfn, '\\') !== false || function_exists($globfn)) {
+        continue;
+    }
     
     $reflParams = $refl->getParameters();
     foreach ($reflParams as $param) {
         $params[] = join(' ', array_filter([
             $param->getClass(),
             $param->isArray() ? 'array' : null,
-            '$' . $param->getName(),
+            '$' . $param->name,
             $param->isDefaultValueAvailable() ? '= ' . var_export($param->getDefaultValue(), true) : null
         ]));
         
-        $args[] = '$' . $param->getName();
+        $args[] = '$' . $param->name;
     }
     
     $paramStr = join(', ', $params);
