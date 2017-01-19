@@ -127,7 +127,7 @@ class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
     
     
     /**
-     * @covers Jasny\array_contains
+     * @covers Jasny\array_contains_assoc
      */
     public function testArrayContainsAssoc()
     {
@@ -143,7 +143,7 @@ class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Jasny\array_contains
+     * @covers Jasny\array_contains_assoc
      */
     public function testArrayContainsAssocWithNested()
     {
@@ -164,7 +164,7 @@ class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Jasny\array_contains
+     * @covers Jasny\array_contains_assoc
      */
     public function testArrayContainsAssocWithStrict()
     {

@@ -3,18 +3,22 @@
 namespace Jasny;
 
 use org\bovigo\vfs\vfsStream;
+use Jasny\TestHelper;
 
 /**
  * Test server functions
  */
 class FileFunctionsTest extends \PHPUnit_Framework_TestCase
 {
+    use TestHelper;
+    
     /**
      * @var \org\bovigo\vfs\vfsStreamDirectory
      */
     protected $root;
     
-    public function setUp() {
+    public function setUp()
+    {
         $this->root = vfsStream::setup();
     }
     
@@ -23,9 +27,13 @@ class FileFunctionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testFileContains()
     {
-        $file = $this->root->url() . '/abc.txt';
         $text = wordwrap(str_repeat("abcdefghijklmopqrstuvwxyz", 100), 80, "\n", true);
-        file_put_contents($file, $text);
+        
+        vfsStream::create([
+            'abc.txt' => $text
+        ]);
+        
+        $file = vfsStream::url('root/abc.txt');
         
         $this->assertTrue(file_contains($file, "klm"), "klm");
         $this->assertTrue(file_contains($file, "abcde\nfgh"), 'abcd\nefgh');
@@ -33,6 +41,18 @@ class FileFunctionsTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(file_contains($file, "foobar"), "foobar");
         
         $this->assertTrue(file_contains($file, substr($text, 140, 400)), 'long sub string');
+    }
+    
+    /**
+     * @covers Jasny\file_contains
+     */
+    public function testFileContainsWithNonExistingFile()
+    {
+        $file = vfsStream::url('root/non-existing.txt');
+
+        $this->assertFalse(@file_contains($file, "foo"));
+        
+        $this->assertLastError(E_WARNING);
     }
     
     
