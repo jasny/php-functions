@@ -86,9 +86,9 @@ Check if an array contains a set of values.
 
 _This function works as expected with nested arrays or an array with objects._
 
-#### array\_contains\_assoc
+#### array\_has\_subset
 
-    boolean array_contains_assoc(array $array, array $subset, boolean $strict = false)
+    boolean array_has_subset(array $array, array $subset, boolean $strict = false)
 
 Check if an array contains a set of values with index check.
 

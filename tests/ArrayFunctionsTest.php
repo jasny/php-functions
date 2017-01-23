@@ -127,53 +127,53 @@ class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
     
     
     /**
-     * @covers Jasny\array_contains_assoc
+     * @covers Jasny\array_has_subset
      */
-    public function testArrayContainsAssoc()
+    public function testArrayHasSubset()
     {
-        $this->assertTrue(array_contains_assoc(
+        $this->assertTrue(array_has_subset(
             ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => 3],
             ['top' => 3, 'bar' => 9]
         ));
         
-        $this->assertFalse(array_contains_assoc(
+        $this->assertFalse(array_has_subset(
             ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => 3],
             ['top' => 3, 'bar' => 7]
         ));
     }
     
     /**
-     * @covers Jasny\array_contains_assoc
+     * @covers Jasny\array_has_subset
      */
-    public function testArrayContainsAssocWithNested()
+    public function testArrayHasSubsetWithNested()
     {
-        $this->assertTrue(array_contains_assoc(
+        $this->assertTrue(array_has_subset(
             ['greet' => ['hello', 'world'], 'x' => 'q', 'item' => (object)['a' => 'b']],
             ['x' => 'q', 'greet' => ['hello', 'world']]
         ));
         
-        $this->assertTrue(array_contains_assoc(
+        $this->assertTrue(array_has_subset(
             ['greet' => ['hello', 'world'], 'x' => 'q', 'item' => (object)['a' => 'b']],
             ['x' => 'q', 'item' => (object)['a' => 'b']]
         ));
         
-        $this->assertFalse(array_contains_assoc(
+        $this->assertFalse(array_has_subset(
             ['greet' => ['hello', 'world'], 'x' => 'q', 'item' => (object)['a' => 'b']],
             ['x' => 'q', 'greet' => ['hello', 'world', '!']]
         ));
     }
     
     /**
-     * @covers Jasny\array_contains_assoc
+     * @covers Jasny\array_has_subset
      */
-    public function testArrayContainsAssocWithStrict()
+    public function testArrayHasSubsetWithStrict()
     {
-        $this->assertTrue(array_contains_assoc(
+        $this->assertTrue(array_has_subset(
             ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => true],
             ['top' => 1, 'bar' => 9]
         ));
         
-        $this->assertFalse(array_contains_assoc(
+        $this->assertFalse(array_has_subset(
             ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => true],
             ['top' => 1, 'bar' => 9],
             true
