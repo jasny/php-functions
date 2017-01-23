@@ -102,7 +102,7 @@ function array_contains(array $array, array $subset, $strict = false)
  * @param boolean $strict  Strict type checking
  * @return boolean
  */
-function array_contains_assoc(array $array, array $subset, $strict = false)
+function array_has_subset(array $array, array $subset, $strict = false)
 {
     foreach ($subset as $key => $value) {
         if (
