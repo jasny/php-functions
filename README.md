@@ -6,8 +6,15 @@ Jasny's PHP functions
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jasny/php-functions/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jasny/php-functions/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/79f3ee18-e8fc-4c7f-8b97-35d04c47a65c/mini.png)](https://insight.sensiolabs.com/projects/79f3ee18-e8fc-4c7f-8b97-35d04c47a65c)
 
-A set of useful PHP functions.
+A set PHP functions that should have been part of PHP's core functionality.
 
+**Example**
+
+```php
+$found = str_contains($string, 'foo') && array_contains($array, ['all', 'of', 'these']);
+// VS
+$found = strpos($string, 'foo') !== false && count(array_intersect($array, ['all', 'of', 'these'])) === 3;
+```
 
 ## Installation
 
