@@ -171,6 +171,18 @@ Check if a string ends with a substring.
     
 Check if a string contains a substring.
 
+#### str\_before
+
+    string str_before(string $string, string $substr)
+
+Get a string before the first occurence of the substring. If the substring is not found, the whole string is returned.
+
+#### str\_after
+
+    string str_after(string $string, string $substr)
+
+Get a string after the first occurence of the substring. If the substring is not found, an empty string is returned.
+
 #### str\_remove\_accents
 
     string str_remove_accents(string $string)
@@ -182,7 +194,6 @@ Replace characters with accents with normal characters.
     string str_slug(string $string, string $glue = '-')
     
 Generate a URL friendly slug from the given string.
-
 
 ## Cast functions
 

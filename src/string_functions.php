@@ -39,6 +39,34 @@ function str_contains($string, $substr)
 }
 
 /**
+ * Get the string before the first occurence of the substring.
+ * If the substring is not found, the whole string is returned.
+ *
+ * @param string $string
+ * @param string $substr
+ * @return string
+ */
+function str_before($string, $substr)
+{
+    $pos = strpos($string, $substr);
+    return $pos === false ? $string : substr($string, 0, $pos);
+}
+
+/**
+ * Get the string after the first occurence of the substring.
+ * If the substring is not found, an empty string is returned.
+ *
+ * @param string $string
+ * @param string $substr
+ * @return string
+ */
+function str_after($string, $substr)
+{
+    $pos = strpos($string, $substr);
+    return $pos === false ? '' : substr($string, $pos + strlen($substr));
+}
+
+/**
  * Replace characters with accents with normal characters.
  *
  * @param string $string
