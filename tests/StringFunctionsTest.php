@@ -8,7 +8,7 @@ namespace Jasny;
 class StringFunctionsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * test str_starts_with
+     * @covers Jasny\str_starts_with
      */
     public function testStrStartsWith()
     {
@@ -22,7 +22,7 @@ class StringFunctionsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * test str_ends_with
+     * @covers Jasny\str_ends_with
      */
     public function testStrEndsWith()
     {
@@ -36,7 +36,7 @@ class StringFunctionsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * test str_contains
+     * @covers Jasny\str_contains
      */
     public function testStrContains()
     {
@@ -49,8 +49,58 @@ class StringFunctionsTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(str_contains('foobar', 'quxfoobar'));
     }
     
+
+    public function strBeforeProvider()
+    {
+        return [
+            ['foo', ';', 'foo'],
+            ['foo;bar', ';', 'foo'],
+            ['foo;bar;zoo', ';', 'foo'],
+            [';bar;zoo', ';', ''],
+            ['fooababar', 'aba', 'foo']
+        ];
+    }
+
     /**
-     * test str_remove_accents
+     * @covers Jasny\str_before
+     * @dataProvider strBeforeProvider
+     *
+     * @param string $string
+     * @param string $expect
+     */
+    public function testStrBefore($string, $substr, $expect)
+    {
+        $this->assertSame($expect, str_before($string, $substr));
+    }
+    
+
+    public function strAfterProvider()
+    {
+        return [
+            ['foo', ';', ''],
+            ['bar;foo', ';', 'foo'],
+            ['bar;foo;zoo', ';', 'foo;zoo'],
+            [';foo;zoo', ';', 'foo;zoo'],
+            ['barabafoo', 'aba', 'foo'],
+            ['abababababa', 'aba', 'babababa']
+        ];
+    }
+
+    /**
+     * @covers Jasny\str_after
+     * @dataProvider strAfterProvider
+     *
+     * @param string $string
+     * @param string $expect
+     */
+    public function testStrAfter($string, $substr, $expect)
+    {
+        $this->assertSame($expect, str_after($string, $substr));
+    }
+
+
+    /**
+     * @covers Jasny\str_remove_accents
      */
     public function testStrRemoveAccents()
     {
@@ -58,7 +108,7 @@ class StringFunctionsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * test str_slug
+     * @covers Jasny\str_slug
      */
     public function testStrSlug()
     {
