@@ -56,13 +56,13 @@ Check if variable is a numeric array.
 
     stdClass|mixed objectify(array|mixed $var)
 
-Turn associated array into stdClass object recursively.
+Turn an associated array into a `stdClass` object recursively.
 
 #### arrayify
 
     array|mixed arrayify(stdClass|mixed $var)
 
-Turn stdClass object into associated array recursively.
+Turn an `stdClass` object into an associated array recursively.
 
 
 ## Array functions
@@ -71,17 +71,17 @@ Turn stdClass object into associated array recursively.
 
     array_unset(array &$array, string $key)
 
-Walk through the array and unset an item with the key. Clones object, so the original aren't modified.
+Walk through the array and unset an item with the key. Clones each object, so the originals aren't modified.
 
 #### array\_only
 
-    array array_only(array $array, string $key)
+    array array_only(array $array, array $keys)
 
 Return an array with only the specified keys.
 
 #### array\_without
 
-    array array_without(array $array, string $key)
+    array array_without(array $array, array $keys)
 
 Return an array without the specified keys.
 
