@@ -103,6 +103,7 @@ function arrayify($var)
  */
 function expect_type($var, $type, $throwable = null, $message = null)
 {
+    $strTypes = [];
     $types = (array)$type;
     
     foreach ($types as $type) {
