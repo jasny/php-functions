@@ -184,7 +184,7 @@ class TypeFunctionsTest extends \PHPUnit_Framework_TestCase
     {
         arrayify($object);
     }
-    
+
     
     public function expectTypeProvider()
     {
@@ -195,7 +195,7 @@ class TypeFunctionsTest extends \PHPUnit_Framework_TestCase
             [(object)[], 'stdClass'],
             [10, ['int', 'boolean']],
             ['foo', 'int', "Expected int, string given"],
-            ['foo', ['int', 'boolean'], "Expected int or bool, string given"],
+            ['foo', ['int', 'boolean'], "Expected int or boolean, string given"],
             [(object)[], 'Foo', "Expected Foo object, stdClass object given"],
         ];
     }
@@ -211,22 +211,11 @@ class TypeFunctionsTest extends \PHPUnit_Framework_TestCase
     public function testExpectType($var, $type, $error = false)
     {
         if ($error) {
-            $this->expectException(class_exists('TypeError') ? 'TypeError' : 'InvalidArgumentException');
+            $this->expectException(\InvalidArgumentException::class);
             $this->expectExceptionMessage($error);
         }
         
-        expect_type($var, $type);
-    }
-    
-    /**
-     * @covers Jasny\expect_type
-     * 
-     * @expectedException UnexpectedValueException
-     * @expectedExceptionMessage Expected int, string given
-     */
-    public function testExpectTypeExplicitThrowable()
-    {
-        expect_type('foo', 'int', \UnexpectedValueException::class);
+        expect_type($var, $type, \InvalidArgumentException::class);
     }
     
     /**

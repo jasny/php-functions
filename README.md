@@ -70,8 +70,8 @@ Turn an `stdClass` object into an associated array recursively.
     
 Validate that an argument has a specific type. 
 
-By default a `TypeError` is thrown in PHP 7 and an [`InvalidArgumentException`](http://php.net/invalidargumentexception)
-is thrown in PHP 5. You can specify a class name for any `Throwable` class.
+By default a `TypeError` (PHP 7) is thrown. You can specify a class name for any `Throwable` class. For PHP 5 you must
+specify the class name.
 
 The message may contain a `%s`, which is replaced by the type of `$var`.
 

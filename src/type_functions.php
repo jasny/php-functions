@@ -97,21 +97,17 @@ function arrayify($var)
  * 
  * @param mixed           $var
  * @param string|string[] $type
- * @param string          $throwable  Class name (defaults to Throwable in PHP7, InvalidArgumentException in PHP5)
+ * @param string          $throwable  Class name
  * @param string          $message
  * @throws \InvalidArgumentException
  */
-function expect_type($var, $type, $throwable = null, $message = null)
+function expect_type($var, $type, $throwable = 'TypeError', $message = null)
 {
     $strTypes = [];
     $types = (array)$type;
     
     foreach ($types as $type) {
-        if ($type === 'boolean') {
-            $type = 'bool';
-        }
-        
-        $fn = 'is_' . $type;
+        $fn = $type === 'boolean' ? 'is_bool' : 'is_' . $type;
         $internal = function_exists($fn);
         
         if ($internal ? $fn($var) : is_a($var, $type)) {
@@ -119,10 +115,6 @@ function expect_type($var, $type, $throwable = null, $message = null)
         }
         
         $strTypes[] = $type . ($internal ? '' : ' object');
-    }
-    
-    if (!isset($throwable)) {
-        $throwable = class_exists('TypeError') ? 'TypeError' : 'InvalidArgumentException';
     }
     
     if (!isset($message)) {
