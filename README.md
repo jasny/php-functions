@@ -6,7 +6,7 @@ Jasny's PHP functions
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jasny/php-functions/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jasny/php-functions/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/79f3ee18-e8fc-4c7f-8b97-35d04c47a65c/mini.png)](https://insight.sensiolabs.com/projects/79f3ee18-e8fc-4c7f-8b97-35d04c47a65c)
 
-A set PHP functions that _should_ have been part of PHP's core functionality.
+A set PHP functions that _should_ have been part of PHP's core libraries.
 
 **Example**
 
