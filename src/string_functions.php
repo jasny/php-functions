@@ -125,4 +125,3 @@ function str_slug($string, $glue = '-')
     $lower = strtolower($normalized);
     return preg_replace('/[\W_]+/', $glue, $lower);
 }
-

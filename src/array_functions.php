@@ -142,3 +142,17 @@ function array_flatten(array $array, $glue = '.')
     return $array;
 }
 
+/**
+ * Join an array, using the 'and' parameter as glue the last two items.
+ * 
+ * @param string $glue
+ * @param string $and
+ * @param array  $array
+ * @return string
+ */
+function array_join_pretty($glue, $and, array $array)
+{
+    $last = array_pop($array);
+    
+    return (empty($array) ? "" : join($glue, $array) . $and) . $last;
+}

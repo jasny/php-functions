@@ -73,9 +73,9 @@ function array_contains(array $array, array $subset, $strict = false)
  * @param boolean $strict  Strict type checking
  * @return boolean
  */
-function array_contains_assoc(array $array, array $subset, $strict = false)
+function array_has_subset(array $array, array $subset, $strict = false)
 {
-    return jasny\array_contains_assoc($array, $subset, $strict);
+    return jasny\array_has_subset($array, $subset, $strict);
 }
 
 /**
@@ -88,6 +88,19 @@ function array_contains_assoc(array $array, array $subset, $strict = false)
 function array_flatten(array $array, $glue = '.')
 {
     return jasny\array_flatten($array, $glue);
+}
+
+/**
+ * Join an array, using the 'and' parameter as glue the last two items.
+ * 
+ * @param string $glue
+ * @param string $and
+ * @param array  $array
+ * @return string
+ */
+function array_join_pretty($glue, $and, array $array)
+{
+    return jasny\array_join_pretty($glue, $and, $array);
 }
 
 /**
@@ -304,6 +317,20 @@ function objectify($var)
 function arrayify($var)
 {
     return jasny\arrayify($var);
+}
+
+/**
+ * Check that an argument has a specific type, otherwise throw an exception.
+ * 
+ * @param mixed           $var
+ * @param string|string[] $type
+ * @param string          $throwable  Class name (defaults to Throwable in PHP7, InvalidArgumentException in PHP5)
+ * @param string          $message
+ * @throws \InvalidArgumentException
+ */
+function expect_type($var, $type, $throwable = NULL, $message = NULL)
+{
+    return jasny\expect_type($var, $type, $throwable, $message);
 }
 
 /**

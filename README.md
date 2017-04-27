@@ -6,7 +6,7 @@ Jasny's PHP functions
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jasny/php-functions/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jasny/php-functions/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/79f3ee18-e8fc-4c7f-8b97-35d04c47a65c/mini.png)](https://insight.sensiolabs.com/projects/79f3ee18-e8fc-4c7f-8b97-35d04c47a65c)
 
-A set PHP functions that should have been part of PHP's core functionality.
+A set PHP functions that _should_ have been part of PHP's core functionality.
 
 **Example**
 
@@ -32,7 +32,7 @@ str_contains('moonrise', 'on');
 Jasny\slug('Foo bár'); // or use directly
 ```
 
-To import all the functions to the global namespace require 'global.php' anywhere in your application
+To import all the functions to the global namespace require 'global.php' anywhere in your application.
 
 ```php
 require_once 'vendor/jasny/php-functions/global.php';
@@ -64,6 +64,23 @@ Turn an associated array into a `stdClass` object recursively.
 
 Turn an `stdClass` object into an associated array recursively.
 
+#### expect\_type
+
+    expect_type(mixed $var, string|string[] $type, string $throwable = null, string $message = null)
+    
+Validate that an argument has a specific type. 
+
+By default a `TypeError` is thrown in PHP 7 and an [`InvalidArgumentException`](http://php.net/invalidargumentexception)
+is thrown in PHP 5. You can specify a class name for any `Throwable` class.
+
+The message may contain a `%s`, which is replaced by the type of `$var`.
+
+###### Example
+
+```php
+expect_type($input, ['array', 'stdClass']);
+expect_type($output, ['array', 'stdClass'], 'UnexpectedValueException', "Output should be an array or stdClass object, got a %s");
+```
 
 ## Array functions
 
@@ -157,6 +174,18 @@ associated item, the key is use as key of `$array` and the value is used as defa
 list($foo, $bar, $useAll) = extract_keys($_GET, ['foo', 'bar', 'all' => false]);
 ```
 
+#### array\_join\_pretty
+
+    string array_join_pretty(string $glue, string $and, array $array);
+
+Join an array, using the 'and' parameter as glue the last two items.
+
+###### Example
+
+```php
+echo "A task to " . array_join_pretty(", ", " and ", $chores) . " has been created.", PHP_EOL;
+echo array_join_pretty(", ", " or ", $names) . " may pick up this task.", PHP_EOL;
+```
 
 ## String functions
 

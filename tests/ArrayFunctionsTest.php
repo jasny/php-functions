@@ -251,4 +251,28 @@ class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals($expect, $flattened);
     }
+
+
+    public function arrayJoinPrettyArrayProvider()
+    {
+        return [
+            [[], ''],
+            [['foo'], 'foo'],
+            [['foo', 'bar'], 'foo&bar'],
+            [['foo', 'bar', 'zoo'], 'foo,bar&zoo'],
+            [[11, 22, 33, 44], '11,22,33&44']
+        ];
+    }
+    
+    /**
+     * @covers Jasny\array_join_pretty
+     * @dataProvider arrayJoinPrettyArrayProvider
+     * 
+     * @param array  $array
+     * @param string $expect
+     */
+    public function testArrayJoinPretty($array, $expect)
+    {
+        $this->assertEquals($expect, array_join_pretty(',', '&', $array));
+    }
 }
