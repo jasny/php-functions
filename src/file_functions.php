@@ -5,8 +5,8 @@ namespace Jasny;
 /**
  * Check if the file contains the specified string
  *
- * @string $filename
- * @string $str
+ * @param string $filename
+ * @param string $str
  * @return boolean
  */
 function file_contains($filename, $str)

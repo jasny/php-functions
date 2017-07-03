@@ -304,7 +304,7 @@ This function is memory usage friendly by not loading the whole contents of the 
 
 #### fnmatch\_extended
 
-    fnmatch_extended(string $pattern, string $path)
+    boolean fnmatch_extended(string $pattern, string $path)
     
 Match path against wildcard pattern. This is an extended version of [fnmatch](http://php.net/fnmatch).
 
@@ -314,3 +314,11 @@ Match path against wildcard pattern. This is an extended version of [fnmatch](ht
 * `**` Matches any characters
 * `[abc]` Matches `a`, `b` or `c`
 * `{ab,cd,ef}` Matches `ab`, `cd` or `ef`
+
+## Function handling functions
+
+#### call\_user\_func\_named\_array
+    
+    mixed call_user_func_named_array(callable $callback, array $param_arr)
+
+Call a callback with named parameters as associative array.

@@ -27,7 +27,8 @@
           "src/string_functions.php",
           "src/server_functions.php",
           "src/type_functions.php",          
-          "src/file_functions.php"
+          "src/file_functions.php",
+          "src/func_functions.php"
         ]
     }
 }
