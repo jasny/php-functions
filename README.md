@@ -261,7 +261,7 @@ Turn a sentence, StudlyCase, camelCase or snake_case into **kabab-case**.
 
     string uncase(string $string)
 
-Turn StudlyCase, camelCase, snake_case or kabab-case into a **sentence**.
+Turn StudlyCase, camelCase, snake_case or kabab-case into **a sentence**.
 
 
 ## Server functions
