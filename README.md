@@ -38,6 +38,16 @@ To import all the functions to the global namespace require 'global.php' anywher
 require_once 'vendor/jasny/php-functions/global.php';
 ```
 
+Alternatively, add it to the `autoload` section of `composer.json`.
+
+```
+"autoload": {
+    "files": [
+        "vendor/jasny/php-functions/global.php"
+    ]
+}
+```
+
 ## Type functions
 
 #### is\_associative\_array
