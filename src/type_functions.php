@@ -117,11 +117,9 @@ function expect_type($var, $type, $throwable = 'TypeError', $message = null)
         $strTypes[] = $type . ($internal ? '' : ' object');
     }
     
-    if (!isset($message)) {
-        $message = "Expected " . array_join_pretty(', ', ' or ', $strTypes) . ", %s given";
-    }
-    
+    $message = $message ?: "Expected " . array_join_pretty(', ', ' or ', $strTypes) . ", %s given";
     $varType = (is_object($var) ? get_class($var) . " " : "") . gettype($var);
     
     throw new $throwable(sprintf($message, $varType));
 }
+
