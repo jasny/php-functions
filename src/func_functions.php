@@ -3,13 +3,14 @@
 namespace Jasny;
 
 /**
- * Check if the file contains the specified string
+ * Call a callback with named parameters as associative array.
  *
  * @param callable $callback
  * @param array    $params_arr
  * @return mixed
+ * @throws RuntimeException
  */
-function call_user_func_named_array($callback, array $params_arr)
+function call_user_func_assoc($callback, array $params_arr)
 {
     $refl = is_array($callback)
         ? new \ReflectionMethod($callback[0], $callback[1])
@@ -34,4 +35,18 @@ function call_user_func_named_array($callback, array $params_arr)
     }
     
     return call_user_func_array($callback, array_slice($args, 0, $max));
+}
+
+/**
+ * Alias of call_user_func_assoc
+ * @deprecated
+ *
+ * @param callable $callback
+ * @param array    $params_arr
+ * @return mixed
+ * @throws RuntimeException
+ */
+function call_user_func_named_array($callback, array $params_arr)
+{
+    return call_user_func_assoc($callback, $params_arr);
 }
