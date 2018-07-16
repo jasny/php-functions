@@ -18,7 +18,8 @@
         "php": ">=5.6"
     },
     "require-dev": {
-        "jasny/php-code-quality": "^2.0"
+        "jasny/php-code-quality": "^2.0",
+        "phpunit/phpunit": "^5.7.0"
     },
     "autoload": {
         "files": [
@@ -29,6 +30,11 @@
           "src/type_functions.php",          
           "src/file_functions.php",
           "src/func_functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "files": [
+          "tests/Support/FooBar.php"
         ]
     }
 }

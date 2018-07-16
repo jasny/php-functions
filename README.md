@@ -333,3 +333,32 @@ Match path against wildcard pattern. This is an extended version of [fnmatch](ht
     mixed call_user_func_assoc(callable $callback, array $param_arr)
 
 Call a callback with named parameters as associative array.
+
+## Object functions
+    
+#### object\_get\_properties
+
+    array object_get_properties(object $object)
+
+Get the public properties of an object.
+
+Unlike `get_object_vars`, this method will return only public properties regardless of the scope.
+    
+#### object\_get\_properties
+
+    array object_get_properties(object $object, bool $dynamic = true)
+
+Get the public properties of an object.
+
+Unlike `get_object_vars`, this method will return only public properties regardless of the scope.
+
+The `dynamic` flag controls if the output should be filtered, so only properties defined in the class are set.
+
+#### object\_set\_properties
+
+    array object_get_properties(object $object, array $data, bool $dynamic = true)
+
+Set the public properties of an object.
+
+The `dynamic` flag controls if `$data` should be filtered, so only properties defined in the class are set.
+

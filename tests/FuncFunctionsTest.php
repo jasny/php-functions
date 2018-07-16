@@ -18,14 +18,14 @@ class FuncFunctionsTest extends \PHPUnit_Framework_TestCase
     
     /**
      * @dataProvider strReplaceNamedArgProvider
-     * @covers Jasny\call_user_func_named_array
+     * @covers Jasny\call_user_func_assoc
      * 
      * @param string $expect
      * @param array  $args
      */
-    public function testCallUserFuncNamedArrayStrReplace($expect, array $args)
+    public function testCallUserFuncAssocStrReplace($expect, array $args)
     {
-        $this->assertEquals($expect, call_user_func_named_array('str_replace', $args));
+        $this->assertEquals($expect, call_user_func_assoc('str_replace', $args));
     }
     
     public function strTrNamedArgProvider()
@@ -38,46 +38,56 @@ class FuncFunctionsTest extends \PHPUnit_Framework_TestCase
     
     /**
      * @dataProvider strTrNamedArgProvider
-     * @covers Jasny\call_user_func_named_array
+     * @covers Jasny\call_user_func_assoc
      * 
      * @param string $expect
      * @param array  $args
      */
-    public function testCallUserFuncNamedArrayStrTr($expect, array $args)
+    public function testCallUserFuncAssocStrTr($expect, array $args)
     {
-        $this->assertEquals($expect, call_user_func_named_array('strtr', $args));
+        $this->assertEquals($expect, call_user_func_assoc('strtr', $args));
     }
     
     /**
-     * @covers Jasny\call_user_func_named_array
+     * @covers Jasny\call_user_func_assoc
      */
-    public function testCallUserFuncNamedArrayDateTime()
+    public function testCallUserFuncAssocDateTime()
     {
         $date = new \DateTime("2017-01-02T00:00:00+0000");
-        $this->assertEquals('2017-01-02', call_user_func_named_array([$date, 'format'], ['format' => 'Y-m-d']));
+        $this->assertEquals('2017-01-02', call_user_func_assoc([$date, 'format'], ['format' => 'Y-m-d']));
     }
 
     
     /**
-     * @covers Jasny\call_user_func_named_array
+     * @covers Jasny\call_user_func_assoc
      * 
      * @expectedException \RuntimeException
      * @expectedExceptionMessage Missing argument 'search' for str_replace()
      */
-    public function testCallUserFuncNamedArrayStrReplaceInvalid()
+    public function testCallUserFuncAssocStrReplaceInvalid()
     {
-        call_user_func_named_array('str_replace', ['subject' => 'foo', 'replace' => 'o']);
+        call_user_func_assoc('str_replace', ['subject' => 'foo', 'replace' => 'o']);
     }
     
     /**
-     * @covers Jasny\call_user_func_named_array
+     * @covers Jasny\call_user_func_assoc
      * 
      * @expectedException \RuntimeException
      * @expectedExceptionMessage Missing argument 'format' for DateTime::format()
      */
-    public function testCallUserFuncNamedArrayDateTimeInvalid()
+    public function testCallUserFuncAssocDateTimeInvalid()
     {
         $date = new \DateTime("2017-01-02T00:00:00+0000");
-        call_user_func_named_array([$date, 'format'], []);
+        call_user_func_assoc([$date, 'format'], []);
+    }
+
+
+    /**
+     * @covers Jasny\call_user_func_named_array
+     */
+    public function testCallUserFuncNamedArray()
+    {
+        $date = new \DateTime("2017-01-02T00:00:00+0000");
+        $this->assertEquals('2017-01-02', call_user_func_named_array([$date, 'format'], ['format' => 'Y-m-d']));
     }
 }
