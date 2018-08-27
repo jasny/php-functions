@@ -92,3 +92,35 @@ function arrayify($var)
     return $var;
 }
 
+
+/**
+ * Check that an argument has a specific type, otherwise throw an exception.
+ * 
+ * @param mixed           $var
+ * @param string|string[] $type
+ * @param string          $throwable  Class name
+ * @param string          $message
+ * @throws \InvalidArgumentException
+ */
+function expect_type($var, $type, $throwable = 'UnexpectedValueException', $message = null)
+{
+    $strTypes = [];
+    $types = (array)$type;
+    
+    foreach ($types as $type) {
+        $fn = $type === 'boolean' ? 'is_bool' : 'is_' . $type;
+        $internal = function_exists($fn);
+        
+        if ($internal ? $fn($var) : is_a($var, $type)) {
+            return; // Valid type
+        }
+        
+        $strTypes[] = $type . ($internal ? '' : ' object');
+    }
+    
+    $message = $message ?: "Expected " . join('|', $strTypes) . ", %s given";
+    $varType = (is_object($var) ? get_class($var) . " " : "") . gettype($var);
+    
+    throw new $throwable(sprintf($message, $varType));
+}
+

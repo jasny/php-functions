@@ -184,4 +184,48 @@ class TypeFunctionsTest extends \PHPUnit_Framework_TestCase
     {
         arrayify($object);
     }
+
+
+    public function expectTypeProvider()
+    {
+        return [
+            [10, 'int'],
+            [true, 'bool'],
+            [[], 'array'],
+            [(object)[], 'stdClass'],
+            [10, ['int', 'boolean']],
+            ['foo', 'int', "Expected int, string given"],
+            ['foo', ['int', 'boolean'], "Expected int|boolean, string given"],
+            [(object)[], 'Foo', "Expected Foo object, stdClass object given"],
+        ];
+    }
+    
+    /**
+     * @covers Jasny\expect_type
+     * @dataProvider expectTypeProvider
+     * 
+     * @param mixed           $var
+     * @param string|string[] $type
+     * @param string|false    $error
+     */
+    public function testExpectType($var, $type, $error = false)
+    {
+        if ($error) {
+            $this->expectException(\InvalidArgumentException::class);
+            $this->expectExceptionMessage($error);
+        }
+        
+        expect_type($var, $type, \InvalidArgumentException::class);
+    }
+    
+    /**
+     * @covers Jasny\expect_type
+     * 
+     * @expectedException Exception
+     * @expectedExceptionMessage Lorem ipsum string black
+     */
+    public function testExpectTypeExplicitMessage()
+    {
+        expect_type('foo', 'int', \Exception::class, "Lorem ipsum %s black");
+    }
 }

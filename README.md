@@ -57,6 +57,22 @@ Turn associated array into stdClass object recursively.
 
 Turn stdClass object into associated array recursively.
 
+#### expect\_type
+
+    expect_type(mixed $var, string|string[] $type, string $throwable = null, string $message = null)
+    
+Validate that an argument has a specific type. 
+
+By default a `UnexpectedValueException` is thrown. You can specify a class name for any `Exception` class.
+
+The message may contain a `%s`, which is replaced by the type of `$var`.
+
+###### Example
+
+```php
+expect_type($input, ['array', 'stdClass']);
+expect_type($output, ['array', 'stdClass'], 'InvalidArgument', "Output should be an array or stdClass object, got a %s");
+```
 
 ## Array functions
 
