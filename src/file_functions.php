@@ -61,4 +61,3 @@ function fnmatch_extended(string $pattern, string $path): bool
 
     return (bool)preg_match("~^{$regex}$~", $path);
 }
-

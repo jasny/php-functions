@@ -65,4 +65,3 @@ function uncase(string $string): string
     
     return $sentence;
 }
-

@@ -6,7 +6,7 @@ namespace Jasny;
 
 /**
  * Check if variable is an associative array.
- * 
+ *
  * @param array $var
  * @return bool
  */
@@ -22,7 +22,7 @@ function is_associative_array($var)
 
 /**
  * Check if variable is a numeric array.
- * 
+ *
  * @param array $var
  * @return bool
  */
@@ -38,7 +38,7 @@ function is_numeric_array($var)
 
 /**
  * Turn associated array into stdClass object recursively.
- * 
+ *
  * @param array|mixed $var
  * @return \stdClass|mixed
  */
@@ -67,7 +67,7 @@ function objectify($var)
 
 /**
  * Turn stdClass object into associated array recursively.
- * 
+ *
  * @param \stdClass|mixed $var
  * @return array|mixed
  */
@@ -103,7 +103,7 @@ function arrayify($var)
  * @param string          $message
  * @throws \InvalidArgumentException
  */
-function expect_type($var, $type, $throwable = 'TypeError', $message = null)
+function expect_type($var, $type, $throwable = \TypeError::class, $message = null)
 {
     $strTypes = [];
     $types = (array)$type;
@@ -124,4 +124,3 @@ function expect_type($var, $type, $throwable = 'TypeError', $message = null)
     
     throw new $throwable(sprintf($message, $varType));
 }
-

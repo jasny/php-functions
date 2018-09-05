@@ -80,7 +80,7 @@ function array_without(array $array, array $keys): array
 
 /**
  * Check if an array contains a set of values.
- * 
+ *
  * @param array   $array
  * @param array   $subset
  * @param bool $strict  Strict type checking
@@ -99,7 +99,7 @@ function array_contains(array $array, array $subset, $strict = false)
 
 /**
  * Check if an array contains a set of values with index check.
- * 
+ *
  * @param array $array
  * @param array $subset
  * @param bool $strict  Strict type checking
@@ -108,8 +108,7 @@ function array_contains(array $array, array $subset, $strict = false)
 function array_has_subset(array $array, array $subset, $strict = false): bool
 {
     foreach ($subset as $key => $value) {
-        if (
-            !array_key_exists($key, $array) ||
+        if (!array_key_exists($key, $array) ||
             isset($value) !== isset($array[$key]) ||
             ($strict ? $value !== $array[$key] : $value != $array[$key])
         ) {
@@ -122,7 +121,7 @@ function array_has_subset(array $array, array $subset, $strict = false): bool
 
 /**
  * Flatten a nested associative array, concatenating the keys.
- * 
+ *
  * @param array  $array
  * @param string $glue
  * @return array

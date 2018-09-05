@@ -6,7 +6,7 @@ namespace Jasny;
 
 /**
  * Convert an IPv4 address or CIDR into an IP6 address or CIDR.
- * 
+ *
  * @param string $ip
  * @return string
  * @throws \InvalidArgumentException if ip isn't valid
@@ -30,7 +30,7 @@ function ipv4_to_ipv6(string $ip): string
 
 /**
  * Check if IP address is in CIDR block
- * 
+ *
  * @param string $ip     An IPv4 or IPv6
  * @param string $cidr   An IPv4 CIDR block or IPv6 CIDR block
  * @return bool
@@ -62,7 +62,7 @@ function ip_in_cidr(string $ip, string $cidr): bool
 
 /**
  * Check if IPv4 address is in CIDR block
- * 
+ *
  * @param string $ip
  * @param string $cidr
  * @return bool
@@ -71,8 +71,7 @@ function ipv4_in_cidr(string $ip, string $cidr): bool
 {
     list($subnet, $mask) = explode('/', $cidr, 2) + [null, '32'];
     
-    if (
-        !filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ||
+    if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ||
         !filter_var($subnet, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)
     ) {
         return false;
@@ -89,7 +88,7 @@ function ipv4_in_cidr(string $ip, string $cidr): bool
 
 /**
  * Check if IPv6 address is in CIDR block
- * 
+ *
  * @param string $ip
  * @param string $cidr
  * @return bool
