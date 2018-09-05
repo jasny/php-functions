@@ -1,11 +1,22 @@
 <?php
 
-namespace Jasny;
+namespace Jasny\Tests;
+
+use PHPStan\Testing\TestCase;
+
+use function Jasny\extract_keys;
+use function Jasny\array_unset;
+use function Jasny\array_only;
+use function Jasny\array_without;
+use function Jasny\array_contains;
+use function Jasny\array_has_subset;
+use function Jasny\array_flatten;
 
 /**
  * Test array functions
+ * @coversNothing
  */
-class ArrayFunctionsTest extends \PHPUnit_Framework_TestCase
+class ArrayFunctionsTest extends TestCase
 {
     /**
      * @covers Jasny\extract_keys

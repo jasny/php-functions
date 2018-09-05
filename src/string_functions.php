@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Jasny;
 
 /**
@@ -7,9 +9,9 @@ namespace Jasny;
  *
  * @param string $string
  * @param string $substr
- * @return boolean
+ * @return bool
  */
-function str_starts_with($string, $substr)
+function str_starts_with(string $string, string $substr): bool
 {
     return strpos($string, $substr) === 0;
 }
@@ -19,9 +21,9 @@ function str_starts_with($string, $substr)
  *
  * @param string $string
  * @param string $substr
- * @return boolean
+ * @return bool
  */
-function str_ends_with($string, $substr)
+function str_ends_with(string $string, string $substr): bool
 {
     return stripos($string, $substr) === strlen($string) - strlen($substr);
 }
@@ -31,9 +33,9 @@ function str_ends_with($string, $substr)
  *
  * @param string $string
  * @param string $substr
- * @return boolean
+ * @return bool
  */
-function str_contains($string, $substr)
+function str_contains(string $string, string $substr): bool
 {
     return strpos($string, $substr) !== false;
 }
@@ -46,7 +48,7 @@ function str_contains($string, $substr)
  * @param string $substr
  * @return string
  */
-function str_before($string, $substr)
+function str_before(string $string, string $substr): string
 {
     $pos = strpos($string, $substr);
     return $pos === false ? $string : substr($string, 0, $pos);
@@ -60,7 +62,7 @@ function str_before($string, $substr)
  * @param string $substr
  * @return string
  */
-function str_after($string, $substr)
+function str_after(string $string, string $substr): string
 {
     $pos = strpos($string, $substr);
     return $pos === false ? '' : substr($string, $pos + strlen($substr));
@@ -72,7 +74,7 @@ function str_after($string, $substr)
  * @param string $string
  * @return string
  */
-function str_remove_accents($string)
+function str_remove_accents(string $string): string
 {
     $from = [
         'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î',
@@ -114,14 +116,16 @@ function str_remove_accents($string)
 }
 
 /**
- * Generate a URL friendly slug from the given string
+ * Generate a URL friendly slug from the given string.
  *
  * @param string $string
+ * @param string $glue
  * @return string
  */
-function str_slug($string, $glue = '-')
+function str_slug(string $string, string $glue = '-'): string
 {
     $normalized = str_remove_accents($string);
     $lower = strtolower($normalized);
+
     return preg_replace('/[\W_]+/', $glue, $lower);
 }

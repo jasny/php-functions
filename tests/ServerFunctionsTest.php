@@ -1,11 +1,19 @@
 <?php
 
-namespace Jasny;
+namespace Jasny\Tests;
+
+use PHPStan\Testing\TestCase;
+
+use function Jasny\ipv4_to_ipv6;
+use function Jasny\ipv4_in_cidr;
+use function Jasny\ipv6_in_cidr;
+use function Jasny\ip_in_cidr;
 
 /**
  * Test server functions
+ * @coversNothing
  */
-class ServerFunctionsTest extends \PHPUnit_Framework_TestCase
+class ServerFunctionsTest extends TestCase
 {
     public function ipv4ToIpv6Provider()
     {
@@ -30,6 +38,7 @@ class ServerFunctionsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
+     * @covers Jasny\ipv4_to_ipv6
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage 'foo' is not a valid IPv4 address or cidr
      */
@@ -39,6 +48,7 @@ class ServerFunctionsTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
+     * @covers Jasny\ipv4_to_ipv6
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage '21DA:00D3:0000:2F3B:02AC:00FF:FE28:9C5A' is not a valid IPv4 address or cidr
      */

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Jasny;
 
 /**
@@ -7,9 +9,9 @@ namespace Jasny;
  *
  * @param string $filename
  * @param string $str
- * @return boolean
+ * @return bool
  */
-function file_contains($filename, $str)
+function file_contains(string $filename, string $str): bool
 {
     $handle = fopen($filename, 'r');
 
@@ -42,9 +44,9 @@ function file_contains($filename, $str)
  *
  * @param string $pattern
  * @param string $path
- * @return boolean
+ * @return bool
  */
-function fnmatch_extended($pattern, $path)
+function fnmatch_extended(string $pattern, string $path): bool
 {
     $quoted = preg_quote($pattern, '~');
     
@@ -57,6 +59,6 @@ function fnmatch_extended($pattern, $path)
     
     $regex = rawurldecode($step2);
 
-    return (boolean)preg_match("~^{$regex}$~", $path);
+    return (bool)preg_match("~^{$regex}$~", $path);
 }
 

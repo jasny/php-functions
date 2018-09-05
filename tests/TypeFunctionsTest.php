@@ -1,11 +1,19 @@
 <?php
 
-namespace Jasny;
+namespace Jasny\Tests;
+
+use PHPStan\Testing\TestCase;
+
+use function Jasny\is_associative_array;
+use function Jasny\is_numeric_array;
+use function Jasny\objectify;
+use function Jasny\arrayify;
 
 /**
  * Test type functions
+ * @coversNothing
  */
-class TypeFunctionsTest extends \PHPUnit_Framework_TestCase
+class TypeFunctionsTest extends TestCase
 {
     const NONE = 0;
     const NUMERIC = 1;

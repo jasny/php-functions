@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Jasny;
 
 /**
@@ -14,7 +16,7 @@ namespace Jasny;
  * @param array $keys
  * @return array
  */
-function extract_keys(array $array, array $keys)
+function extract_keys(array $array, array $keys): array
 {
     $values = [];
 
@@ -33,8 +35,9 @@ function extract_keys(array $array, array $keys)
  *
  * @param array        $array  Array with objects or arrays
  * @param string|array $key
+ * @return void
  */
-function array_unset(array &$array, $key)
+function array_unset(array &$array, $key): void
 {
     foreach ($array as &$item) {
         foreach ((array)$key as $k) {
@@ -56,7 +59,7 @@ function array_unset(array &$array, $key)
  * @param array $keys
  * @return array
  */
-function array_only(array $array, array $keys)
+function array_only(array $array, array $keys): array
 {
     $intersect = array_fill_keys($keys, null);
     return array_intersect_key($array, $intersect);
@@ -69,7 +72,7 @@ function array_only(array $array, array $keys)
  * @param array $keys
  * @return array
  */
-function array_without(array $array, array $keys)
+function array_without(array $array, array $keys): array
 {
     $intersect = array_fill_keys($keys, null);
     return array_diff_key($array, $intersect);
@@ -80,8 +83,8 @@ function array_without(array $array, array $keys)
  * 
  * @param array   $array
  * @param array   $subset
- * @param boolean $strict  Strict type checking
- * @return boolean
+ * @param bool $strict  Strict type checking
+ * @return bool
  */
 function array_contains(array $array, array $subset, $strict = false)
 {
@@ -99,10 +102,10 @@ function array_contains(array $array, array $subset, $strict = false)
  * 
  * @param array $array
  * @param array $subset
- * @param boolean $strict  Strict type checking
- * @return boolean
+ * @param bool $strict  Strict type checking
+ * @return bool
  */
-function array_has_subset(array $array, array $subset, $strict = false)
+function array_has_subset(array $array, array $subset, $strict = false): bool
 {
     foreach ($subset as $key => $value) {
         if (
@@ -124,7 +127,7 @@ function array_has_subset(array $array, array $subset, $strict = false)
  * @param string $glue
  * @return array
  */
-function array_flatten(array $array, $glue = '.')
+function array_flatten(array $array, $glue = '.'): array
 {
     foreach ($array as $key => &$value) {
         if (!is_associative_array($value)) {

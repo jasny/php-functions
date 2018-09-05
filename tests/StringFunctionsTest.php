@@ -1,11 +1,22 @@
 <?php
 
-namespace Jasny;
+namespace Jasny\Tests;
+
+use PHPStan\Testing\TestCase;
+
+use function Jasny\str_starts_with;
+use function Jasny\str_ends_with;
+use function Jasny\str_contains;
+use function Jasny\str_before;
+use function Jasny\str_after;
+use function Jasny\str_remove_accents;
+use function Jasny\str_slug;
 
 /**
  * Test string functions
+ * @coversNothing
  */
-class StringFunctionsTest extends \PHPUnit_Framework_TestCase
+class StringFunctionsTest extends TestCase
 {
     /**
      * @covers Jasny\str_starts_with

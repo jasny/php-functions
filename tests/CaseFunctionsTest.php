@@ -1,11 +1,21 @@
 <?php
 
-namespace Jasny;
+namespace Jasny\Tests;
+
+use PHPStan\Testing\TestCase;
+
+use function Jasny\camelcase;
+use function Jasny\studlycase;
+use function Jasny\snakecase;
+use function Jasny\kababcase;
+use function Jasny\uncase;
+
 
 /**
  * Test case functions
+ * @coversNothing
  */
-class CaseFunctionsTest extends \PHPUnit_Framework_TestCase
+class CaseFunctionsTest extends TestCase
 {
     public function fooBarProvider()
     {

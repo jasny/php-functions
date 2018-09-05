@@ -5,7 +5,8 @@ Jasny's PHP functions
 [![Code Coverage](https://scrutinizer-ci.com/g/jasny/php-functions/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jasny/php-functions/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jasny/php-functions/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jasny/php-functions/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/79f3ee18-e8fc-4c7f-8b97-35d04c47a65c/mini.png)](https://insight.sensiolabs.com/projects/79f3ee18-e8fc-4c7f-8b97-35d04c47a65c)
-[![BCH compliance](https://bettercodehub.com/edge/badge/jasny/php-functions?branch=master)](https://bettercodehub.com/)
+[![Packagist Stable Version](https://img.shields.io/packagist/v/jasny/php-functions.svg)](https://packagist.org/packages/jasny/php-functions)
+[![Packagist License](https://img.shields.io/packagist/l/jasny/php-functions.svg)](https://packagist.org/packages/jasny/php-functions)
 
 A set PHP functions that _should_ have been part of PHP's core libraries.
 

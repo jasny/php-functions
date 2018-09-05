@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Jasny;
 
 /**
@@ -9,7 +11,7 @@ namespace Jasny;
  * @return string
  * @throws \InvalidArgumentException if ip isn't valid
  */
-function ipv4_to_ipv6($ip)
+function ipv4_to_ipv6(string $ip): string
 {
     if ($ip === '0.0.0.0/0') {
         return '::';
@@ -31,9 +33,9 @@ function ipv4_to_ipv6($ip)
  * 
  * @param string $ip     An IPv4 or IPv6
  * @param string $cidr   An IPv4 CIDR block or IPv6 CIDR block
- * @return boolean
+ * @return bool
  */
-function ip_in_cidr($ip, $cidr)
+function ip_in_cidr(string $ip, string $cidr): bool
 {
     if ($cidr === '0.0.0.0/0' || $cidr === '::/0' || $cidr === '::') {
         return true;
@@ -54,6 +56,7 @@ function ip_in_cidr($ip, $cidr)
     }
     
     $fn = __NAMESPACE__ . "\\ipv{$ipv}_in_cidr";
+    
     return $fn($ip, $cidr);
 }
 
@@ -62,9 +65,9 @@ function ip_in_cidr($ip, $cidr)
  * 
  * @param string $ip
  * @param string $cidr
- * @return boolean
+ * @return bool
  */
-function ipv4_in_cidr($ip, $cidr)
+function ipv4_in_cidr(string $ip, string $cidr): bool
 {
     list($subnet, $mask) = explode('/', $cidr, 2) + [null, '32'];
     
@@ -89,9 +92,9 @@ function ipv4_in_cidr($ip, $cidr)
  * 
  * @param string $ip
  * @param string $cidr
- * @return boolean
+ * @return bool
  */
-function ipv6_in_cidr($ip, $cidr)
+function ipv6_in_cidr(string $ip, string $cidr): bool
 {
     if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
         return false;
@@ -105,6 +108,7 @@ function ipv6_in_cidr($ip, $cidr)
         $mask = $cidr === '::' ? 0 : substr_count(rtrim($cidr, ':'), ':') * 16;
     } else {
         list($net, $mask) = explode('/', $cidr, 2);
+        $mask = (int)$mask;
     }
 
     if (!filter_var($net, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
@@ -126,7 +130,7 @@ function ipv6_in_cidr($ip, $cidr)
  * @param string $inet
  * @return string
  */
-function inet_to_bits($inet)
+function inet_to_bits(string $inet): string
 {
     $unpackedArr = unpack('A16', $inet);
     $unpacked = str_split($unpackedArr[1]);
@@ -139,4 +143,3 @@ function inet_to_bits($inet)
 
     return str_pad($binaryip, 128, '0', STR_PAD_RIGHT);
 }
-

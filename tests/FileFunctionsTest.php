@@ -1,14 +1,19 @@
 <?php
 
-namespace Jasny;
+namespace Jasny\Tests;
 
 use org\bovigo\vfs\vfsStream;
 use Jasny\TestHelper;
+use PHPStan\Testing\TestCase;
+
+use function Jasny\file_contains;
+use function Jasny\fnmatch_extended;
 
 /**
  * Test server functions
+ * @coversNothing
  */
-class FileFunctionsTest extends \PHPUnit_Framework_TestCase
+class FileFunctionsTest extends TestCase
 {
     use TestHelper;
     

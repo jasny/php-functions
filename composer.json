@@ -15,11 +15,10 @@
         "source": "https://github.com/jasny/php-functions"
     },
     "require": {
-        "php": ">=5.6"
+        "php": ">=7.1"
     },
     "require-dev": {
-        "jasny/php-code-quality": "^2.0",
-        "phpunit/phpunit": "^5.7.0"
+        "jasny/php-code-quality": "^2.2"
     },
     "autoload": {
         "files": [
@@ -36,5 +35,27 @@
         "files": [
           "tests/Support/FooBar.php"
         ]
-    }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jasny\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": [
+            "phpunit",
+            "phpcs -p src",
+            "phpstan analyse"
+        ],
+        "post-create-project-cmd": [
+            "bash init.sh && rm init.sh"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

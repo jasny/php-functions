@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Jasny;
 
 /**
  * Check if variable is an associative array.
  * 
  * @param array $var
- * @return boolean
+ * @return bool
  */
 function is_associative_array($var)
 {
@@ -22,7 +24,7 @@ function is_associative_array($var)
  * Check if variable is a numeric array.
  * 
  * @param array $var
- * @return boolean
+ * @return bool
  */
 function is_numeric_array($var)
 {
