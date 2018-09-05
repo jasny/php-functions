@@ -3,21 +3,38 @@
 namespace Jasny;
 
 use Jasny\Tests\Support\FooBar;
+use PHPStan\Testing\TestCase;
 
 /**
  * Test object functions
+ * @coversNothing
  */
-class ObjectFunctionsTest extends \PHPUnit_Framework_TestCase
+class ObjectFunctionsTest extends TestCase
 {
+    protected $object;
+
+    public function setUp()
+    {
+        $this->object = new class() {
+            public $foo = 'woo';
+            public $bar = 'BAR';
+            protected $qux = 'qqq';
+            private $tol = 'lot';
+
+            public function getProperties($dynamic = false)
+            {
+                return \Jasny\object_get_properties($this, $dynamic);
+            }
+        };
+    }
+
     /**
      * @covers Jasny\object_get_properties
      */
     public function testObjectGetProperties()
     {
-        $object = new FooBar();
-
-        $this->assertSame(['foo' => 'woo', 'bar' => 'BAR'], object_get_properties($object));
-        $this->assertSame(['foo' => 'woo', 'bar' => 'BAR'], $object->getProperties());
+        $this->assertSame(['foo' => 'woo', 'bar' => 'BAR'], object_get_properties($this->object));
+        $this->assertSame(['foo' => 'woo', 'bar' => 'BAR'], $this->object->getProperties());
     }
 
     /**
@@ -25,11 +42,11 @@ class ObjectFunctionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectGetPropertiesDynamic()
     {
-        $object = new FooBar();
-        $object->color = 'red';
+        $this->object->color = 'red';
 
-        $this->assertSame(['foo' => 'woo', 'bar' => 'BAR', 'color' => 'red'], object_get_properties($object, true));
-        $this->assertSame(['foo' => 'woo', 'bar' => 'BAR', 'color' => 'red'], $object->getProperties(true));
+        $expected = ['foo' => 'woo', 'bar' => 'BAR', 'color' => 'red'];
+        $this->assertSame($expected, object_get_properties($this->object, true));
+        $this->assertSame($expected, $this->object->getProperties(true));
     }
 
     /**
@@ -37,11 +54,10 @@ class ObjectFunctionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectGetPropertiesNotDynamic()
     {
-        $object = new FooBar();
-        $object->color = 'red';
+        $this->object->color = 'red';
 
-        $this->assertSame(['foo' => 'woo', 'bar' => 'BAR'], object_get_properties($object, false));
-        $this->assertSame(['foo' => 'woo', 'bar' => 'BAR'], $object->getProperties(false));
+        $this->assertSame(['foo' => 'woo', 'bar' => 'BAR'], object_get_properties($this->object, false));
+        $this->assertSame(['foo' => 'woo', 'bar' => 'BAR'], $this->object->getProperties(false));
     }
 
 
@@ -50,11 +66,10 @@ class ObjectFunctionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectSetProperties()
     {
-        $object = new FooBar();
-        object_set_properties($object, ['foo' => 'cool', 'bar' => 'land']);
+        object_set_properties($this->object, ['foo' => 'cool', 'bar' => 'land']);
 
-        $this->assertAttributeSame('cool', 'foo', $object);
-        $this->assertAttributeSame('land', 'bar', $object);
+        $this->assertAttributeSame('cool', 'foo', $this->object);
+        $this->assertAttributeSame('land', 'bar', $this->object);
     }
 
     /**
@@ -62,11 +77,10 @@ class ObjectFunctionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectSetPropertiesDynamic()
     {
-        $object = new FooBar();
-        object_set_properties($object, ['foo' => 'cool', 'bar' => 'land', 'color' => 'red'], true);
+        object_set_properties($this->object, ['foo' => 'cool', 'bar' => 'land', 'color' => 'red'], true);
 
-        $this->assertObjectHasAttribute('color', $object);
-        $this->assertAttributeSame('red', 'color', $object);
+        $this->assertObjectHasAttribute('color', $this->object);
+        $this->assertAttributeSame('red', 'color', $this->object);
     }
 
     /**
@@ -74,10 +88,9 @@ class ObjectFunctionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectSetPropertiesNotDynamic()
     {
-        $object = new FooBar();
-        object_set_properties($object, ['foo' => 'cool', 'bar' => 'land', 'color' => 'red'], false);
+        object_set_properties($this->object, ['foo' => 'cool', 'bar' => 'land', 'color' => 'red'], false);
 
-        $this->assertObjectNotHasAttribute('color', $object);
+        $this->assertObjectNotHasAttribute('color', $this->object);
     }
 }
 

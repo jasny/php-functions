@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Jasny;
 
 /**
@@ -10,8 +12,10 @@ namespace Jasny;
  * @param bool   $dynamic  Get properties not defined in the class
  * @return array
  */
-function object_get_properties($object, $dynamic = false)
+function object_get_properties($object, bool $dynamic = false): array
 {
+    expect_type($object, 'object');
+
     $data = get_object_vars($object);
 
     if (!$dynamic) {
@@ -30,9 +34,12 @@ function object_get_properties($object, $dynamic = false)
  * @param object $object
  * @param array  $data
  * @param bool   $dynamic  Set properties not defined in the class
+ * @return void
  */
-function object_set_properties($object, array $data, $dynamic = false)
+function object_set_properties($object, array $data, bool $dynamic = false): void
 {
+    expect_type($object, 'object');
+
     if (!$dynamic) {
         $class = get_class($object);
         $props = array_keys(get_class_vars($class));
