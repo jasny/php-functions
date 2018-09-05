@@ -5,58 +5,10 @@ declare(strict_types = 1);
 namespace Jasny;
 
 /**
- * Get items from an array.
- * Set default values using [key => value].
- *
- * <code>
- *   list($foo, $bar, $useAll) = extract_keys($_GET, ['foo', 'bar', 'all' => false]);
- * </cody>
- *
- * @param array $array
- * @param array $keys
- * @return array
- */
-function extract_keys(array $array, array $keys): array
-{
-    $values = [];
-
-    foreach ($keys as $i => $v) {
-        $key = is_int($i) ? $v : $i;
-        $default = is_int($i) ? null : $v;
-        
-        $values[] = isset($array[$key]) ? $array[$key] : $default;
-    }
-
-    return $values;
-}
-
-/**
- * Walk through the array and unset an item with the key
- *
- * @param array        $array  Array with objects or arrays
- * @param string|array $key
- * @return void
- */
-function array_unset(array &$array, $key): void
-{
-    foreach ($array as &$item) {
-        foreach ((array)$key as $k) {
-            if (is_object($item) && isset($item->$k)) {
-                unset($item->$k);
-            }
-
-            if (is_array($item) && isset($item[$k])) {
-                unset($item[$k]);
-            }
-        }
-    }
-}
-
-/**
  * Return an array with only the specified keys.
  *
- * @param array $array
- * @param array $keys
+ * @param array          $array
+ * @param string[]|int[] $keys
  * @return array
  */
 function array_only(array $array, array $keys): array
@@ -68,8 +20,8 @@ function array_only(array $array, array $keys): array
 /**
  * Return an array without the specified keys.
  *
- * @param array $array
- * @param array $keys
+ * @param array          $array
+ * @param string[]|int[] $keys
  * @return array
  */
 function array_without(array $array, array $keys): array
@@ -79,44 +31,104 @@ function array_without(array $array, array $keys): array
 }
 
 /**
- * Check if an array contains a set of values.
- *
- * @param array   $array
- * @param array   $subset
- * @param bool $strict  Strict type checking
- * @return bool
- */
-function array_contains(array $array, array $subset, $strict = false)
-{
-    foreach ($subset as $value) {
-        if (!in_array($value, $array, $strict)) {
-            return false;
-        }
-    }
-    
-    return true;
-}
-
-/**
- * Check if an array contains a set of values with index check.
+ * Check if an array contains all values in a set.
  *
  * @param array $array
  * @param array $subset
- * @param bool $strict  Strict type checking
+ * @param bool  $strict  Strict type checking
  * @return bool
  */
-function array_has_subset(array $array, array $subset, $strict = false): bool
+function array_contains_all(array $array, array $subset, bool $strict = false)
 {
+    $contains = true;
+
+    foreach ($subset as $value) {
+        if (!in_array($value, $array, $strict)) {
+            $contains = false;
+            break;
+        }
+    }
+    
+    return $contains;
+}
+
+/**
+ * Check if an array contains all values in a set with index check.
+ *
+ * @param array $array
+ * @param array $subset
+ * @param bool  $strict  Strict type checking
+ * @return bool
+ */
+function array_contains_all_assoc(array $array, array $subset, bool $strict = false): bool
+{
+    if (count(array_diff_key($subset, $array)) > 0) { // Quick test, just on keys
+        return false;
+    }
+
+    $contains = true;
+
     foreach ($subset as $key => $value) {
         if (!array_key_exists($key, $array) ||
             isset($value) !== isset($array[$key]) ||
             ($strict ? $value !== $array[$key] : $value != $array[$key])
         ) {
-            return false;
+            $contains = false;
         }
     }
     
-    return true;
+    return $contains;
+}
+
+/**
+ * Check if an array contains any value in a set.
+ **
+ * @param array $array
+ * @param array $subset
+ * @param bool  $strict  Strict type checking
+ * @return bool
+ */
+function array_contains_any(array $array, array $subset, bool $strict = false): bool
+{
+    $contains = false;
+
+    foreach ($subset as $value) {
+        if (in_array($value, $array, $strict)) {
+            $contains = true;
+            break;
+        }
+    }
+
+    return $contains;
+}
+
+/**
+ * Check if an array contains any value in a set with index check.
+ *
+ * @param array $array
+ * @param array $subset
+ * @param bool  $strict  Strict type checking
+ * @return bool
+ */
+function array_contains_any_assoc(array $array, array $subset, bool $strict = false): bool
+{
+    if (count(array_intersect_key($subset, $array)) === 0) { // Quick test, just on keys
+        return false;
+    }
+
+    $contains = false;
+
+    foreach ($subset as $key => $value) {
+        if (array_key_exists($key, $array) &&
+            isset($value) === isset($array[$key]) &&
+            ($strict ? $value === $array[$key] : $value == $array[$key])
+        ) {
+            $contains = true;
+            break;
+        }
+    }
+
+    return $contains;
 }
 
 /**
@@ -126,7 +138,7 @@ function array_has_subset(array $array, array $subset, $strict = false): bool
  * @param string $glue
  * @return array
  */
-function array_flatten(array $array, $glue = '.'): array
+function array_flatten(array $array, string $glue = '.'): array
 {
     foreach ($array as $key => &$value) {
         if (!is_associative_array($value)) {

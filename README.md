@@ -96,12 +96,6 @@ expect_type($output, ['array', 'stdClass'], 'UnexpectedValueException', "Output 
 
 ## Array functions
 
-#### array\_unset
-
-    array_unset(array &$array, string $key)
-
-Walk through the array and unset an item with the key. Clones each object, so the originals aren't modified.
-
 #### array\_only
 
     array array_only(array $array, array $keys)
@@ -114,19 +108,35 @@ Return an array with only the specified keys.
 
 Return an array without the specified keys.
 
-#### array\_contains
+#### array\_contains\_all
 
-    boolean array_contains(array $array, array $subset, boolean $strict = false)
+    boolean array_contains_all(array $array, array $subset, boolean $strict = false)
 
-Check if an array contains a set of values.
+Check if an array contains all values in a set.
 
 _This function works as expected with nested arrays or an array with objects._
 
-#### array\_has\_subset
+#### array\_contains\_all\_assoc
 
-    boolean array_has_subset(array $array, array $subset, boolean $strict = false)
+    boolean array_contains_all_assoc(array $array, array $subset, boolean $strict = false)
 
-Check if an array contains a set of values with index check.
+Check if an array contains all values in a set with index check.
+
+_This function works as expected with nested arrays or an array with objects._
+
+#### array\_contains\_any
+
+    boolean array_contains_any(array $array, array $subset, boolean $strict = false)
+
+Check if an array contains any value in a set.
+
+_This function works as expected with nested arrays or an array with objects._
+
+#### array\_contains\_any\_assoc
+
+    boolean array_contains_any_assoc(array $array, array $subset, boolean $strict = false)
+
+Check if an array contains any value in a set with index check.
 
 _This function works as expected with nested arrays or an array with objects._
 
@@ -170,22 +180,6 @@ Will become
 ]
 ```
 
-#### extract\_keys
-
-    array extract_keys(array $array, array $keys)
-
-Get items from array identified by the keys. Will not trigger notices if a key doesn't exist.
-
-`$keys` may be a mix of a index an assosiated array. With an indexed item, the value is used as key of `$array`. For an
-associated item, the key is use as key of `$array` and the value is used as default. The default value is picked if
-`$array` doesn't has the key or the value is `null` (using `isset()`).
-
-###### Example
-
-```php
-list($foo, $bar, $useAll) = extract_keys($_GET, ['foo', 'bar', 'all' => false]);
-```
-
 #### array\_join\_pretty
 
     string array_join_pretty(string $glue, string $and, array $array);
@@ -198,6 +192,7 @@ Join an array, using the 'and' parameter as glue the last two items.
 echo "A task to " . array_join_pretty(", ", " and ", $chores) . " has been created.", PHP_EOL;
 echo array_join_pretty(", ", " or ", $names) . " may pick up this task.", PHP_EOL;
 ```
+
 
 ## String functions
 
@@ -242,6 +237,7 @@ Replace characters with accents with normal characters.
     string str_slug(string $string, string $glue = '-')
     
 Generate a URL friendly slug from the given string.
+
 
 ## Cast functions
 
@@ -326,6 +322,7 @@ Match path against wildcard pattern. This is an extended version of [fnmatch](ht
 * `**` Matches any characters
 * `[abc]` Matches `a`, `b` or `c`
 * `{ab,cd,ef}` Matches `ab`, `cd` or `ef`
+
 
 ## Function handling functions
 

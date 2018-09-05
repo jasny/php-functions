@@ -1,96 +1,6 @@
 <?php
 
 /**
- * Get items from an array.
- * Set default values using [key => value].
- *
- * <code>
- *   list($foo, $bar, $useAll) = extract_keys($_GET, ['foo', 'bar', 'all' => false]);
- * </cody>
- *
- * @param array $array
- * @param array $keys
- * @return array
- */
-function extract_keys(array $array, array $keys)
-{
-    return jasny\extract_keys($array, $keys);
-}
-
-/**
- * Walk through the array and unset an item with the key
- *
- * @param array        $array  Array with objects or arrays
- * @param string|array $key
- */
-function array_unset(array $array, $key)
-{
-    return jasny\array_unset($array, $key);
-}
-
-/**
- * Return an array with only the specified keys.
- *
- * @param array $array
- * @param array $keys
- * @return array
- */
-function array_only(array $array, array $keys)
-{
-    return jasny\array_only($array, $keys);
-}
-
-/**
- * Return an array without the specified keys.
- *
- * @param array $array
- * @param array $keys
- * @return array
- */
-function array_without(array $array, array $keys)
-{
-    return jasny\array_without($array, $keys);
-}
-
-/**
- * Check if an array contains a set of values.
- * 
- * @param array   $array
- * @param array   $subset
- * @param boolean $strict  Strict type checking
- * @return boolean
- */
-function array_contains(array $array, array $subset, $strict = false)
-{
-    return jasny\array_contains($array, $subset, $strict);
-}
-
-/**
- * Check if an array contains a set of values with index check.
- * 
- * @param array $array
- * @param array $subset
- * @param boolean $strict  Strict type checking
- * @return boolean
- */
-function array_has_subset(array $array, array $subset, $strict = false)
-{
-    return jasny\array_has_subset($array, $subset, $strict);
-}
-
-/**
- * Flatten a nested associative array, concatenating the keys.
- * 
- * @param array  $array
- * @param string $glue
- * @return array
- */
-function array_flatten(array $array, $glue = '.')
-{
-    return jasny\array_flatten($array, $glue);
-}
-
-/**
  * Join an array, using the 'and' parameter as glue the last two items.
  * 
  * @param string $glue
@@ -104,47 +14,91 @@ function array_join_pretty($glue, $and, array $array)
 }
 
 /**
- * Turn a sentence, camelCase, snake_case or kabab-case into camelCase
+ * Flatten a nested associative array, concatenating the keys.
  *
- * @param string $string
- * @return string
+ * @param array  $array
+ * @param string $glue
+ * @return array
  */
-function camelcase($string)
+function array_flatten(array $array, $glue = '.')
 {
-    return jasny\camelcase($string);
+    return jasny\array_flatten($array, $glue);
 }
 
 /**
- * Turn a sentence, camelCase, snake_case or kabab-case into StudlyCase
+ * Check if an array contains any value in a set with index check.
  *
- * @param string $string
- * @return string
+ * @param array $array
+ * @param array $subset
+ * @param bool  $strict  Strict type checking
+ * @return bool
  */
-function studlycase($string)
+function array_contains_any_assoc(array $array, array $subset, $strict = false)
 {
-    return jasny\studlycase($string);
+    return jasny\array_contains_any_assoc($array, $subset, $strict);
 }
 
 /**
- * Turn a sentence, camelCase, StudlyCase or kabab-case into snake_case
- *
- * @param string $string
- * @return string
+ * Check if an array contains any value in a set.
+ **
+ * @param array $array
+ * @param array $subset
+ * @param bool  $strict  Strict type checking
+ * @return bool
  */
-function snakecase($string)
+function array_contains_any(array $array, array $subset, $strict = false)
 {
-    return jasny\snakecase($string);
+    return jasny\array_contains_any($array, $subset, $strict);
 }
 
 /**
- * Turn a sentence, camelCase, StudlyCase or snake_case into kabab-case
+ * Check if an array contains all values in a set with index check.
  *
- * @param string $string
- * @return string
+ * @param array $array
+ * @param array $subset
+ * @param bool  $strict  Strict type checking
+ * @return bool
  */
-function kababcase($string)
+function array_contains_all_assoc(array $array, array $subset, $strict = false)
 {
-    return jasny\kababcase($string);
+    return jasny\array_contains_all_assoc($array, $subset, $strict);
+}
+
+/**
+ * Check if an array contains all values in a set.
+ *
+ * @param array $array
+ * @param array $subset
+ * @param bool  $strict  Strict type checking
+ * @return bool
+ */
+function array_contains_all(array $array, array $subset, $strict = false)
+{
+    return jasny\array_contains_all($array, $subset, $strict);
+}
+
+/**
+ * Return an array without the specified keys.
+ *
+ * @param array          $array
+ * @param string[]|int[] $keys
+ * @return array
+ */
+function array_without(array $array, array $keys)
+{
+    return jasny\array_without($array, $keys);
+}
+
+/**
+ * Return an array with only the specified keys.
+ *
+ * @param array          $array
+ * @param string[]|int[] $keys
+ * @return array
+ */
+function array_only(array $array, array $keys)
+{
+    return jasny\array_only($array, $keys);
 }
 
 /**
@@ -159,39 +113,59 @@ function uncase($string)
 }
 
 /**
- * Check if a string starts with a substring
+ * Turn a sentence, camelCase, StudlyCase or snake_case into kabab-case
  *
  * @param string $string
- * @param string $substr
- * @return boolean
+ * @return string
  */
-function str_starts_with($string, $substr)
+function kababcase($string)
 {
-    return jasny\str_starts_with($string, $substr);
+    return jasny\kababcase($string);
 }
 
 /**
- * Check if a string ends with a substring
+ * Turn a sentence, camelCase, StudlyCase or kabab-case into snake_case
  *
  * @param string $string
- * @param string $substr
- * @return boolean
+ * @return string
  */
-function str_ends_with($string, $substr)
+function snakecase($string)
 {
-    return jasny\str_ends_with($string, $substr);
+    return jasny\snakecase($string);
 }
 
 /**
- * Check if a string contains a substring
+ * Turn a sentence, camelCase, snake_case or kabab-case into StudlyCase
  *
  * @param string $string
- * @param string $substr
- * @return boolean
+ * @return string
  */
-function str_contains($string, $substr)
+function studlycase($string)
 {
-    return jasny\str_contains($string, $substr);
+    return jasny\studlycase($string);
+}
+
+/**
+ * Turn a sentence, camelCase, snake_case or kabab-case into camelCase
+ *
+ * @param string $string
+ * @return string
+ */
+function camelcase($string)
+{
+    return jasny\camelcase($string);
+}
+
+/**
+ * Generate a URL friendly slug from the given string.
+ *
+ * @param string $string
+ * @param string $glue
+ * @return string
+ */
+function str_slug($string, $glue = '-')
+{
+    return jasny\str_slug($string, $glue);
 }
 
 /**
@@ -206,62 +180,65 @@ function str_remove_accents($string)
 }
 
 /**
- * Generate a URL friendly slug from the given string
+ * Get the string after the first occurence of the substring.
+ * If the substring is not found, an empty string is returned.
  *
  * @param string $string
+ * @param string $substr
  * @return string
  */
-function str_slug($string, $glue = '-')
+function str_after($string, $substr)
 {
-    return jasny\str_slug($string, $glue);
+    return jasny\str_after($string, $substr);
 }
 
 /**
- * Convert an IPv4 address or CIDR into an IP6 address or CIDR.
- * 
- * @param string $ip
+ * Get the string before the first occurence of the substring.
+ * If the substring is not found, the whole string is returned.
+ *
+ * @param string $string
+ * @param string $substr
  * @return string
- * @throws \InvalidArgumentException if ip isn't valid
  */
-function ipv4_to_ipv6($ip)
+function str_before($string, $substr)
 {
-    return jasny\ipv4_to_ipv6($ip);
+    return jasny\str_before($string, $substr);
 }
 
 /**
- * Check if IP address is in CIDR block
- * 
- * @param string $ip     An IPv4 or IPv6
- * @param string $cidr   An IPv4 CIDR block or IPv6 CIDR block
- * @return boolean
+ * Check if a string contains a substring
+ *
+ * @param string $string
+ * @param string $substr
+ * @return bool
  */
-function ip_in_cidr($ip, $cidr)
+function str_contains($string, $substr)
 {
-    return jasny\ip_in_cidr($ip, $cidr);
+    return jasny\str_contains($string, $substr);
 }
 
 /**
- * Check if IPv4 address is in CIDR block
- * 
- * @param string $ip
- * @param string $cidr
- * @return boolean
+ * Check if a string ends with a substring
+ *
+ * @param string $string
+ * @param string $substr
+ * @return bool
  */
-function ipv4_in_cidr($ip, $cidr)
+function str_ends_with($string, $substr)
 {
-    return jasny\ipv4_in_cidr($ip, $cidr);
+    return jasny\str_ends_with($string, $substr);
 }
 
 /**
- * Check if IPv6 address is in CIDR block
- * 
- * @param string $ip
- * @param string $cidr
- * @return boolean
+ * Check if a string starts with a substring
+ *
+ * @param string $string
+ * @param string $substr
+ * @return bool
  */
-function ipv6_in_cidr($ip, $cidr)
+function str_starts_with($string, $substr)
 {
-    return jasny\ipv6_in_cidr($ip, $cidr);
+    return jasny\str_starts_with($string, $substr);
 }
 
 /**
@@ -276,41 +253,70 @@ function inet_to_bits($inet)
 }
 
 /**
- * Check if variable is an associative array.
- * 
- * @param array $var
- * @return boolean
+ * Check if IPv6 address is in CIDR block
+ *
+ * @param string $ip
+ * @param string $cidr
+ * @return bool
  */
-function is_associative_array($var)
+function ipv6_in_cidr($ip, $cidr)
 {
-    return jasny\is_associative_array($var);
+    return jasny\ipv6_in_cidr($ip, $cidr);
 }
 
 /**
- * Check if variable is a numeric array.
- * 
- * @param array $var
- * @return boolean
+ * Check if IPv4 address is in CIDR block
+ *
+ * @param string $ip
+ * @param string $cidr
+ * @return bool
  */
-function is_numeric_array($var)
+function ipv4_in_cidr($ip, $cidr)
 {
-    return jasny\is_numeric_array($var);
+    return jasny\ipv4_in_cidr($ip, $cidr);
 }
 
 /**
- * Turn associated array into stdClass object recursively.
- * 
- * @param array|mixed $var
- * @return \stdClass|mixed
+ * Check if IP address is in CIDR block
+ *
+ * @param string $ip     An IPv4 or IPv6
+ * @param string $cidr   An IPv4 CIDR block or IPv6 CIDR block
+ * @return bool
  */
-function objectify($var)
+function ip_in_cidr($ip, $cidr)
 {
-    return jasny\objectify($var);
+    return jasny\ip_in_cidr($ip, $cidr);
+}
+
+/**
+ * Convert an IPv4 address or CIDR into an IP6 address or CIDR.
+ *
+ * @param string $ip
+ * @return string
+ * @throws \InvalidArgumentException if ip isn't valid
+ */
+function ipv4_to_ipv6($ip)
+{
+    return jasny\ipv4_to_ipv6($ip);
+}
+
+/**
+ * Check that an argument has a specific type, otherwise throw an exception.
+ * 
+ * @param mixed           $var
+ * @param string|string[] $type
+ * @param string          $throwable  Class name
+ * @param string          $message
+ * @throws \InvalidArgumentException
+ */
+function expect_type($var, $type, $throwable = 'TypeError', $message = NULL)
+{
+    return jasny\expect_type($var, $type, $throwable, $message);
 }
 
 /**
  * Turn stdClass object into associated array recursively.
- * 
+ *
  * @param \stdClass|mixed $var
  * @return array|mixed
  */
@@ -320,29 +326,36 @@ function arrayify($var)
 }
 
 /**
- * Check that an argument has a specific type, otherwise throw an exception.
- * 
- * @param mixed           $var
- * @param string|string[] $type
- * @param string          $throwable  Class name (defaults to Throwable in PHP7, InvalidArgumentException in PHP5)
- * @param string          $message
- * @throws \InvalidArgumentException
+ * Turn associated array into stdClass object recursively.
+ *
+ * @param array|mixed $var
+ * @return \stdClass|mixed
  */
-function expect_type($var, $type, $throwable = NULL, $message = NULL)
+function objectify($var)
 {
-    return jasny\expect_type($var, $type, $throwable, $message);
+    return jasny\objectify($var);
 }
 
 /**
- * Check if the file contains the specified string
+ * Check if variable is a numeric array.
  *
- * @string $filename
- * @string $str
- * @return boolean
+ * @param array $var
+ * @return bool
  */
-function file_contains($filename, $str)
+function is_numeric_array($var)
 {
-    return jasny\file_contains($filename, $str);
+    return jasny\is_numeric_array($var);
+}
+
+/**
+ * Check if variable is an associative array.
+ *
+ * @param array $var
+ * @return bool
+ */
+function is_associative_array($var)
+{
+    return jasny\is_associative_array($var);
 }
 
 /**
@@ -350,9 +363,21 @@ function file_contains($filename, $str)
  *
  * @param string $pattern
  * @param string $path
- * @return boolean
+ * @return bool
  */
 function fnmatch_extended($pattern, $path)
 {
     return jasny\fnmatch_extended($pattern, $path);
+}
+
+/**
+ * Check if the file contains the specified string
+ *
+ * @param string $filename
+ * @param string $str
+ * @return bool
+ */
+function file_contains($filename, $str)
+{
+    return jasny\file_contains($filename, $str);
 }

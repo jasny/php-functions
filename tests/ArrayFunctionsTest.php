@@ -4,12 +4,12 @@ namespace Jasny\Tests;
 
 use PHPStan\Testing\TestCase;
 
-use function Jasny\extract_keys;
-use function Jasny\array_unset;
 use function Jasny\array_only;
 use function Jasny\array_without;
-use function Jasny\array_contains;
-use function Jasny\array_has_subset;
+use function Jasny\array_contains_all;
+use function Jasny\array_contains_all_assoc;
+use function Jasny\array_contains_any;
+use function Jasny\array_contains_any_assoc;
 use function Jasny\array_flatten;
 
 /**
@@ -18,68 +18,6 @@ use function Jasny\array_flatten;
  */
 class ArrayFunctionsTest extends TestCase
 {
-    /**
-     * @covers Jasny\extract_keys
-     */
-    public function testExtractKeys()
-    {
-        $this->assertEquals([10, 20], extract_keys(['foo' => 20, 'bar' => 10, 'qux' => 99], ['bar', 'foo']));
-        
-        $this->assertEquals(
-            [null, 20, 300],
-            extract_keys(['foo' => 20, 'qux' => 99], ['bar', 'foo' => 0, 'jazz' => 300])
-        );
-    }
-
-    /**
-     * @covers Jasny\array_unset
-     */
-    public function testArrayUnsetWithArray()
-    {
-        $array = [
-            ['foo' => 1, 'bar' => 20, 'qux' => 99],
-            ['foo' => 2, 'bar' => 30, 'qux' => 99],
-            ['foo' => 3, 'bar' => 40],
-            ['foo' => 4, 'qux' => 99]
-        ];
-        
-        $expect = [
-            ['foo' => 1, 'qux' => 99],
-            ['foo' => 2, 'qux' => 99],
-            ['foo' => 3],
-            ['foo' => 4, 'qux' => 99]
-        ];
-        
-        array_unset($array, 'bar');
-        $this->assertSame($expect, $array);
-    }
-    
-    /**
-     * @covers Jasny\array_unset
-     */
-    public function testArrayUnsetWithObject()
-    {
-        $t1 = (object)['foo' => 1, 'bar' => 20, 'qux' => 99];
-        $t2 = (object)['foo' => 2, 'bar' => 30, 'qux' => 99];
-        $t3 = (object)['foo' => 3, 'bar' => 40];
-        $t4 = (object)['foo' => 4, 'qux' => 99];
-        
-        $array = [$t1, $t2, $t3, $t4];
-        
-        $expect = [
-            (object)['foo' => 1, 'qux' => 99],
-            (object)['foo' => 2, 'qux' => 99],
-            (object)['foo' => 3],
-            (object)['foo' => 4, 'qux' => 99]
-        ];
-        
-        array_unset($array, 'bar');
-        
-        $this->assertEquals($expect, $array);
-        $this->assertEquals($t1, $array[0]);
-    }
-    
-    
     /**
      * @covers Jasny\array_only
      */
@@ -104,92 +42,243 @@ class ArrayFunctionsTest extends TestCase
     
     
     /**
-     * @covers Jasny\array_contains
+     * @covers Jasny\array_contains_all
      */
-    public function testArrayContains()
+    public function testArrayContainsAll()
     {
-        $this->assertTrue(array_contains(['foo', 'bar', 'baz', 'top'], ['top', 'bar']));
-        $this->assertFalse(array_contains(['foo', 'baz', 'top'], ['top', 'bar']));
+        $this->assertTrue(array_contains_all(['foo', 'bar', 'baz', 'top'], ['top', 'bar']));
+        $this->assertFalse(array_contains_all(['foo', 'baz', 'top'], ['top', 'bar']));
     }
-    
+
     /**
-     * @covers Jasny\array_contains
+     * @covers Jasny\array_contains_all
      */
-    public function testArrayContainsWithNested()
+    public function testArrayContainsAllWithEmpty()
     {
-        $this->assertTrue(array_contains([['hello', 'world'], 'q', (object)['a' => 'b']], ['q', ['hello', 'world']]));
-        $this->assertTrue(array_contains([['hello', 'world'], 'q', (object)['a' => 'b']], [(object)['a' => 'b']]));
+        $this->assertTrue(array_contains_all(['foo', 'bar', 'baz', 'top'], []));
+    }
+
+    /**
+     * @covers Jasny\array_contains_all
+     */
+    public function testArrayContainsAllWithNested()
+    {
+        $this->assertTrue(array_contains_all(
+            [['hello', 'world'], 'q', (object)['a' => 'b']],
+            ['q', ['hello', 'world']]
+        ));
+        $this->assertTrue(array_contains_all(
+            [['hello', 'world'], 'q', (object)['a' => 'b']],
+            [(object)['a' => 'b']]
+        ));
         
-        $this->assertFalse(array_contains([['hello', 'world'], 'q', (object)['a' => 'b']], ['q', ['hello']]));
-        $this->assertFalse(array_contains(
+        $this->assertFalse(array_contains_all(
+            [['hello', 'world'], 'q', (object)['a' => 'b']],
+            ['q', ['hello']]
+        ));
+        $this->assertFalse(array_contains_all(
             [['hello', 'world'], 'q', (object)['a' => 'b']],
             ['q', ['hello', 'world', '!']]
         ));
     }
     
     /**
-     * @covers Jasny\array_contains
+     * @covers Jasny\array_contains_all
      */
-    public function testArrayContainsWithStrict()
+    public function testArrayContainsAllWithStrict()
     {
-        $this->assertTrue(array_contains(['foo', 'bar', true], [1, 'bar']));
-        $this->assertFalse(array_contains(['foo', 'bar', true], [1, 'bar'], true));
+        $this->assertTrue(array_contains_all(['foo', 'bar', true], [1, 'bar']));
+        $this->assertFalse(array_contains_all(['foo', 'bar', true], [1, 'bar'], true));
     }
     
     
     /**
-     * @covers Jasny\array_has_subset
+     * @covers Jasny\array_contains_all_assoc
      */
-    public function testArrayHasSubset()
+    public function testArrayContainsAllAssoc()
     {
-        $this->assertTrue(array_has_subset(
+        $this->assertTrue(array_contains_all_assoc(
             ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => 3],
             ['top' => 3, 'bar' => 9]
         ));
         
-        $this->assertFalse(array_has_subset(
+        $this->assertFalse(array_contains_all_assoc(
             ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => 3],
             ['top' => 3, 'bar' => 7]
         ));
     }
-    
+
     /**
-     * @covers Jasny\array_has_subset
+     * @covers Jasny\array_contains_all_assoc
      */
-    public function testArrayHasSubsetWithNested()
+    public function testArrayContainsAllAssocWithDifferentKeys()
     {
-        $this->assertTrue(array_has_subset(
+        $this->assertFalse(array_contains_all_assoc(
+            ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => 3],
+            ['top' => 3, 'wuz' => 7]
+        ));
+    }
+
+    /**
+     * @covers Jasny\array_contains_all_assoc
+     */
+    public function testArrayContainsAllAssocWithEmpty()
+    {
+        $this->assertTrue(array_contains_all_assoc(['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => 3], []));
+    }
+
+    /**
+     * @covers Jasny\array_contains_all_assoc
+     */
+    public function testArrayContainsAllAssocWithNested()
+    {
+        $this->assertTrue(array_contains_all_assoc(
             ['greet' => ['hello', 'world'], 'x' => 'q', 'item' => (object)['a' => 'b']],
             ['x' => 'q', 'greet' => ['hello', 'world']]
         ));
         
-        $this->assertTrue(array_has_subset(
+        $this->assertTrue(array_contains_all_assoc(
             ['greet' => ['hello', 'world'], 'x' => 'q', 'item' => (object)['a' => 'b']],
             ['x' => 'q', 'item' => (object)['a' => 'b']]
         ));
         
-        $this->assertFalse(array_has_subset(
+        $this->assertFalse(array_contains_all_assoc(
             ['greet' => ['hello', 'world'], 'x' => 'q', 'item' => (object)['a' => 'b']],
             ['x' => 'q', 'greet' => ['hello', 'world', '!']]
         ));
     }
     
     /**
-     * @covers Jasny\array_has_subset
+     * @covers Jasny\array_contains_all_assoc
      */
-    public function testArrayHasSubsetWithStrict()
+    public function testArrayContainsAllAssocWithStrict()
     {
-        $this->assertTrue(array_has_subset(
+        $this->assertTrue(array_contains_all_assoc(
             ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => true],
             ['top' => 1, 'bar' => 9]
         ));
         
-        $this->assertFalse(array_has_subset(
+        $this->assertFalse(array_contains_all_assoc(
             ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => true],
             ['top' => 1, 'bar' => 9],
             true
         ));
     }
+
+
+    /**
+     * @covers Jasny\array_contains_any
+     */
+    public function testArrayContainsAny()
+    {
+        $this->assertTrue(array_contains_any(['foo', 'baz', 'top'], ['top', 'bar']));
+        $this->assertFalse(array_contains_any(['foo', 'baz'], ['top', 'bar']));
+    }
+
+    /**
+     * @covers Jasny\array_contains_any
+     */
+    public function testArrayContainsAnyWithEmpty()
+    {
+        $this->assertFalse(array_contains_any(['foo', 'baz', 'top'], []));
+    }
+
+    /**
+     * @covers Jasny\array_contains_any
+     */
+    public function testArrayContainsAnyWithNested()
+    {
+        $this->assertTrue(array_contains_any(
+            [['hello', 'world'], 'q', (object)['a' => 'b']],
+            ['x', ['hello', 'world']]
+        ));
+        $this->assertTrue(array_contains_any(
+            [['hello', 'world'], 'q', (object)['a' => 'b']],
+            [(object)['a' => 'b']]
+        ));
+
+        $this->assertFalse(array_contains_any([['hello', 'world'], 'q', (object)['a' => 'b']], ['x', ['hello']]));
+        $this->assertFalse(array_contains_any(
+            [['hello', 'world'], 'q', (object)['a' => 'b']],
+            ['x', ['hello', 'world', '!']]
+        ));
+    }
+
+    /**
+     * @covers Jasny\array_contains_any
+     */
+    public function testArrayContainsAnyWithStrict()
+    {
+        $this->assertTrue(array_contains_any(['foo', true], [1, 'bar']));
+        $this->assertFalse(array_contains_any(['foo', true], [1, 'bar'], true));
+    }
+
+
+    /**
+     * @covers Jasny\array_contains_any_assoc
+     */
+    public function testArrayContainsAnyAssoc()
+    {
+        $this->assertTrue(array_contains_any_assoc(
+            ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => 3],
+            ['taf' => 3, 'bar' => 9]
+        ));
+
+        $this->assertFalse(array_contains_any_assoc(
+            ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => 3],
+            ['taf' => 3, 'bar' => 7]
+        ));
+    }
+
+    /**
+     * @covers Jasny\array_contains_any_assoc
+     */
+    public function testArrayContainsAnyAssocWithDifferentKeys()
+    {
+        $this->assertFalse(array_contains_any_assoc(
+            ['foo' => 7, 'bar' => 9, 'baz' => 12, 'top' => 3],
+            ['taf' => 3, 'wuz' => 7]
+        ));
+    }
+
+    /**
+     * @covers Jasny\array_contains_any_assoc
+     */
+    public function testArrayContainsAnyAssocWithNested()
+    {
+        $this->assertTrue(array_contains_any_assoc(
+            ['greet' => ['hello', 'world'], 'x' => 'q', 'item' => (object)['a' => 'b']],
+            ['x' => 'x', 'greet' => ['hello', 'world']]
+        ));
+
+        $this->assertTrue(array_contains_any_assoc(
+            ['greet' => ['hello', 'world'], 'x' => 'q', 'item' => (object)['a' => 'b']],
+            ['x' => 'x', 'item' => (object)['a' => 'b']]
+        ));
+
+        $this->assertFalse(array_contains_any_assoc(
+            ['greet' => ['hello', 'world'], 'x' => 'q', 'item' => (object)['a' => 'b']],
+            ['x' => 'x', 'greet' => ['hello', 'world', '!']]
+        ));
+    }
+
+    /**
+     * @covers Jasny\array_contains_any_assoc
+     */
+    public function testArrayContainsAnyAssocWithStrict()
+    {
+        $this->assertTrue(array_contains_any_assoc(
+            ['foo' => 7, 'baz' => 12, 'top' => true],
+            ['top' => 1, 'bar' => 9]
+        ));
+
+        $this->assertFalse(array_contains_any_assoc(
+            ['foo' => 7, 'baz' => 12, 'top' => true],
+            ['top' => 1, 'bar' => 9],
+            true
+        ));
+    }
+    
 
     public function arrayFlattenGlueProvider()
     {
