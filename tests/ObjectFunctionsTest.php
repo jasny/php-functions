@@ -18,8 +18,6 @@ class ObjectFunctionsTest extends TestCase
             public $foo = 'woo';
             public $bar = 'BAR';
             protected $qux = 'qqq';
-
-            /** @scrutinizer ignore-unused */
             private $tol = 'lot';
 
             public function getProperties($dynamic = false)

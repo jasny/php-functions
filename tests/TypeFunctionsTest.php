@@ -184,8 +184,6 @@ class TypeFunctionsTest extends TestCase
      * 
      * @expectedException \OverflowException
      * @expectedExceptionMessage Maximum recursion depth reached. Possible circular reference.
-     * 
-     * @param stdClass $object
      */
     public function testArrayifyCircularReference(\stdClass $object)
     {
