@@ -140,6 +140,24 @@ Check if an array contains any value in a set with index check.
 
 _This function works as expected with nested arrays or an array with objects._
 
+#### array\_find
+
+    mixed array_find(array $array, callable $callback, int $flag = 0)
+
+Find an element of an array using a callback function. Returns the value or FALSE if no element was found.
+
+Flag determining what arguments are sent to callback:
+
+* `ARRAY_FILTER_USE_KEY` - pass key as the only argument to callback instead of the value
+* `ARRAY_FILTER_USE_BOTH` - pass both value and key as arguments to callback instead of the value
+* Default is `0` which will pass value as the only argument to callback instead.
+
+#### array\_find\_key
+
+    string|int|false array_find_key(array $array, callable $callback, int $flag = 0)
+
+Find a key of an array using a callback function. Returns the key or FALSE if no element was found.
+
 #### array\_flatten
 
     array function array_flatten(string $glue, array $array)
