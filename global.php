@@ -2,7 +2,7 @@
 
 /**
  * Join an array, using the 'and' parameter as glue the last two items.
- * 
+ *
  * @param string $glue
  * @param string $and
  * @param array  $array
@@ -23,6 +23,38 @@ function array_join_pretty($glue, $and, array $array)
 function array_flatten(array $array, $glue = '.')
 {
     return jasny\array_flatten($array, $glue);
+}
+
+/**
+ * Find a key of an array using a callback function.
+ * @see array_filter()
+ *
+ * Returns the key or FALSE if no element was found.
+ *
+ * @param array    $array
+ * @param callable $callback
+ * @param int      $flag      Flag determining what arguments are sent to callback
+ * @return string|int|false
+ */
+function array_find_key(array $array, $callback, $flag = 0)
+{
+    return jasny\array_find_key($array, $callback, $flag);
+}
+
+/**
+ * Find an element of an array using a callback function.
+ * @see array_filter()
+ *
+ * Returns the value or FALSE if no element was found.
+     *
+ * @param array    $array
+ * @param callable $callback
+ * @param int      $flag      Flag determining what arguments are sent to callback
+ * @return mixed|false
+ */
+function array_find(array $array, $callback, $flag = 0)
+{
+    return jasny\array_find($array, $callback, $flag);
 }
 
 /**
@@ -157,6 +189,129 @@ function camelcase($string)
 }
 
 /**
+ * Match path against an extended wildcard pattern.
+ *
+ * @param string $pattern
+ * @param string $path
+ * @return bool
+ */
+function fnmatch_extended($pattern, $path)
+{
+    return jasny\fnmatch_extended($pattern, $path);
+}
+
+/**
+ * Check if the file contains the specified string
+ *
+ * @param string $filename
+ * @param string $str
+ * @return bool
+ */
+function file_contains($filename, $str)
+{
+    return jasny\file_contains($filename, $str);
+}
+
+/**
+ * Call a callback with named parameters as associative array.
+ *
+ * @param callable $callback
+ * @param array    $params_arr
+ * @return mixed
+ * @throws \BadFunctionCallException
+ * @throws \ReflectionException
+ */
+function call_user_func_assoc($callback, array $params_arr)
+{
+    return jasny\call_user_func_assoc($callback, $params_arr);
+}
+
+/**
+ * Set the public properties of an object
+ *
+ * @param object $object
+ * @param array  $data
+ * @param bool   $dynamic  Set properties not defined in the class
+ * @return void
+ */
+function object_set_properties($object, array $data, $dynamic = false)
+{
+    return jasny\object_set_properties($object, $data, $dynamic);
+}
+
+/**
+ * Get the public properties of an object.
+ * This is an alias of `get_object_vars`, except if will always return public properties only.
+ *
+ * @param object $object
+ * @param bool   $dynamic  Get properties not defined in the class
+ * @return array
+ */
+function object_get_properties($object, $dynamic = false)
+{
+    return jasny\object_get_properties($object, $dynamic);
+}
+
+/**
+ * Converts inet_pton output to string with bits.
+ *
+ * @param string $inet
+ * @return string
+ */
+function inet_to_bits($inet)
+{
+    return jasny\inet_to_bits($inet);
+}
+
+/**
+ * Check if IPv6 address is in CIDR block
+ *
+ * @param string $ip
+ * @param string $cidr
+ * @return bool
+ */
+function ipv6_in_cidr($ip, $cidr)
+{
+    return jasny\ipv6_in_cidr($ip, $cidr);
+}
+
+/**
+ * Check if IPv4 address is in CIDR block
+ *
+ * @param string $ip
+ * @param string $cidr
+ * @return bool
+ */
+function ipv4_in_cidr($ip, $cidr)
+{
+    return jasny\ipv4_in_cidr($ip, $cidr);
+}
+
+/**
+ * Check if IP address is in CIDR block
+ *
+ * @param string $ip     An IPv4 or IPv6
+ * @param string $cidr   An IPv4 CIDR block or IPv6 CIDR block
+ * @return bool
+ */
+function ip_in_cidr($ip, $cidr)
+{
+    return jasny\ip_in_cidr($ip, $cidr);
+}
+
+/**
+ * Convert an IPv4 address or CIDR into an IP6 address or CIDR.
+ *
+ * @param string $ip
+ * @return string
+ * @throws \InvalidArgumentException if ip isn't valid
+ */
+function ipv4_to_ipv6($ip)
+{
+    return jasny\ipv4_to_ipv6($ip);
+}
+
+/**
  * Generate a URL friendly slug from the given string.
  *
  * @param string $string
@@ -242,71 +397,13 @@ function str_starts_with($string, $substr)
 }
 
 /**
- * Converts inet_pton output to string with bits.
- *
- * @param string $inet
- * @return string
- */
-function inet_to_bits($inet)
-{
-    return jasny\inet_to_bits($inet);
-}
-
-/**
- * Check if IPv6 address is in CIDR block
- *
- * @param string $ip
- * @param string $cidr
- * @return bool
- */
-function ipv6_in_cidr($ip, $cidr)
-{
-    return jasny\ipv6_in_cidr($ip, $cidr);
-}
-
-/**
- * Check if IPv4 address is in CIDR block
- *
- * @param string $ip
- * @param string $cidr
- * @return bool
- */
-function ipv4_in_cidr($ip, $cidr)
-{
-    return jasny\ipv4_in_cidr($ip, $cidr);
-}
-
-/**
- * Check if IP address is in CIDR block
- *
- * @param string $ip     An IPv4 or IPv6
- * @param string $cidr   An IPv4 CIDR block or IPv6 CIDR block
- * @return bool
- */
-function ip_in_cidr($ip, $cidr)
-{
-    return jasny\ip_in_cidr($ip, $cidr);
-}
-
-/**
- * Convert an IPv4 address or CIDR into an IP6 address or CIDR.
- *
- * @param string $ip
- * @return string
- * @throws \InvalidArgumentException if ip isn't valid
- */
-function ipv4_to_ipv6($ip)
-{
-    return jasny\ipv4_to_ipv6($ip);
-}
-
-/**
  * Check that an argument has a specific type, otherwise throw an exception.
- * 
+ *
  * @param mixed           $var
  * @param string|string[] $type
  * @param string          $throwable  Class name
  * @param string          $message
+ * @return void
  * @throws \InvalidArgumentException
  */
 function expect_type($var, $type, $throwable = 'TypeError', $message = NULL)
@@ -339,7 +436,7 @@ function objectify($var)
 /**
  * Check if variable is a numeric array.
  *
- * @param array $var
+ * @param array|mixed $var
  * @return bool
  */
 function is_numeric_array($var)
@@ -350,34 +447,10 @@ function is_numeric_array($var)
 /**
  * Check if variable is an associative array.
  *
- * @param array $var
+ * @param array|mixed $var
  * @return bool
  */
 function is_associative_array($var)
 {
     return jasny\is_associative_array($var);
-}
-
-/**
- * Match path against an extended wildcard pattern.
- *
- * @param string $pattern
- * @param string $path
- * @return bool
- */
-function fnmatch_extended($pattern, $path)
-{
-    return jasny\fnmatch_extended($pattern, $path);
-}
-
-/**
- * Check if the file contains the specified string
- *
- * @param string $filename
- * @param string $str
- * @return bool
- */
-function file_contains($filename, $str)
-{
-    return jasny\file_contains($filename, $str);
 }
