@@ -109,15 +109,15 @@ function expect_type($var, $type, string $throwable = \TypeError::class, string 
     $strTypes = [];
     $types = is_scalar($type) ? [$type] : $type;
     
-    foreach ($types as $type) {
-        $fn = $type === 'boolean' ? 'is_bool' : 'is_' . $type;
+    foreach ($types as $curtype) {
+        $fn = $curtype === 'boolean' ? 'is_bool' : 'is_' . $curtype;
         $internal = function_exists($fn);
         
-        if ($internal ? $fn($var) : is_a($var, $type)) {
+        if ($internal ? $fn($var) : is_a($var, $curtype)) {
             return; // Valid type
         }
         
-        $strTypes[] = $type . ($internal ? '' : ' object');
+        $strTypes[] = $curtype . ($internal ? '' : ' object');
     }
     
     $message = $message ?: "Expected " . array_join_pretty(', ', ' or ', $strTypes) . ", %s given";
