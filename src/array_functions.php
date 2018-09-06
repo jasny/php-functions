@@ -210,15 +210,15 @@ function array_flatten(array $array, string $glue = '.'): array
 
 /**
  * Join an array, using the 'and' parameter as glue the last two items.
- * 
+ *
  * @param string $glue
  * @param string $and
  * @param array  $array
  * @return string
  */
-function array_join_pretty($glue, $and, array $array)
+function array_join_pretty(string $glue, string $and, array $array): string
 {
-    $last = array_pop($array);
+    $last = (string)array_pop($array);
     
-    return (empty($array) ? "" : join($glue, $array) . $and) . $last;
+    return (count($array) === 0 ? "" : join($glue, $array) . $and) . $last;
 }

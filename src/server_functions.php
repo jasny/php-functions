@@ -19,7 +19,7 @@ function ipv4_to_ipv6(string $ip): string
 
     list($address, $mask) = explode('/', $ip, 2) + [null, null];
 
-    if (!filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) || (isset($mask) && !ctype_digit($mask))) {
+    if (!(bool)filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) || (isset($mask) && !ctype_digit($mask))) {
         throw new \InvalidArgumentException("'$ip' is not a valid IPv4 address or cidr");
     }
     
@@ -71,8 +71,8 @@ function ipv4_in_cidr(string $ip, string $cidr): bool
 {
     list($subnet, $mask) = explode('/', $cidr, 2) + [null, '32'];
     
-    if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ||
-        !filter_var($subnet, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)
+    if (!(bool)filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ||
+        !(bool)filter_var($subnet, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)
     ) {
         return false;
     }
@@ -95,7 +95,7 @@ function ipv4_in_cidr(string $ip, string $cidr): bool
  */
 function ipv6_in_cidr(string $ip, string $cidr): bool
 {
-    if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+    if (!(bool)filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
         return false;
     }
     
@@ -110,7 +110,7 @@ function ipv6_in_cidr(string $ip, string $cidr): bool
         $mask = (int)$mask;
     }
 
-    if (!filter_var($net, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+    if (!(bool)filter_var($net, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
         return false;
     }
         

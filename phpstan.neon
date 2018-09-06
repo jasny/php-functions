@@ -2,5 +2,8 @@ parameters:
     level: 4
     paths:
         - src
+    ignoreErrors:
+        - '/Call to function in_array\(\) requires parameter #3 to be true/'
 includes:
   	- vendor/phpstan/phpstan-strict-rules/rules.neon
+

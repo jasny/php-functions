@@ -24,11 +24,12 @@
         "files": [
           "src/array_functions.php",
           "src/case_functions.php",
-          "src/string_functions.php",
-          "src/server_functions.php",
-          "src/type_functions.php",          
           "src/file_functions.php",
-          "src/func_functions.php"
+          "src/func_functions.php",
+          "src/object_functions.php",
+          "src/server_functions.php",
+          "src/string_functions.php",
+          "src/type_functions.php"
         ]
     },
     "autoload-dev": {

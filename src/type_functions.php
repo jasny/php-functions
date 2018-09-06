@@ -7,10 +7,10 @@ namespace Jasny;
 /**
  * Check if variable is an associative array.
  *
- * @param array $var
+ * @param array|mixed $var
  * @return bool
  */
-function is_associative_array($var)
+function is_associative_array($var): bool
 {
     if (!is_array($var)) {
         return false;
@@ -23,10 +23,10 @@ function is_associative_array($var)
 /**
  * Check if variable is a numeric array.
  *
- * @param array $var
+ * @param array|mixed $var
  * @return bool
  */
-function is_numeric_array($var)
+function is_numeric_array($var): bool
 {
     if (!is_array($var)) {
         return false;
@@ -96,17 +96,18 @@ function arrayify($var)
 
 /**
  * Check that an argument has a specific type, otherwise throw an exception.
- * 
+ *
  * @param mixed           $var
  * @param string|string[] $type
  * @param string          $throwable  Class name
  * @param string          $message
+ * @return void
  * @throws \InvalidArgumentException
  */
-function expect_type($var, $type, $throwable = \TypeError::class, $message = null)
+function expect_type($var, $type, string $throwable = \TypeError::class, string $message = null): void
 {
     $strTypes = [];
-    $types = (array)$type;
+    $types = is_scalar($type) ? [$type] : $type;
     
     foreach ($types as $type) {
         $fn = $type === 'boolean' ? 'is_bool' : 'is_' . $type;
