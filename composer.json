@@ -33,11 +33,6 @@
         ]
     },
     "autoload-dev": {
-        "files": [
-          "tests/Support/FooBar.php"
-        ]
-    },
-    "autoload-dev": {
         "psr-4": {
             "Jasny\\Tests\\": "tests/"
         }
