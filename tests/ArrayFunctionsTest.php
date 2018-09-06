@@ -10,7 +10,10 @@ use function Jasny\array_contains_all;
 use function Jasny\array_contains_all_assoc;
 use function Jasny\array_contains_any;
 use function Jasny\array_contains_any_assoc;
+use function Jasny\array_find;
+use function Jasny\array_find_key;
 use function Jasny\array_flatten;
+use function Jasny\array_join_pretty;
 
 /**
  * Test array functions
@@ -278,7 +281,105 @@ class ArrayFunctionsTest extends TestCase
             true
         ));
     }
-    
+
+
+    /**
+     * @covers Jasny\array_find
+     */
+    public function testArrayFind()
+    {
+        $value = array_find(['foo' => 8, 'wuz' => 42, 'bar' => 99, 'qux' => 111], function($item) {
+            return $item > 10 && $item < 100;
+        });
+
+        $this->assertEquals(42, $value);
+    }
+
+    /**
+     * @covers Jasny\array_find
+     */
+    public function testArrayFindWithKey()
+    {
+        $value = array_find(['foo' => 8, 'wuz' => 42, 'bar' => 99, 'qux' => 111], function($key) {
+            return strpos($key, 'u') !== false;
+        }, ARRAY_FILTER_USE_KEY);
+
+        $this->assertEquals(42, $value);
+    }
+
+    /**
+     * @covers Jasny\array_find
+     */
+    public function testArrayFindWithBoth()
+    {
+        $value = array_find(['foo' => 8, 'bar' => 99, 'wuz' => 42, 'qux' => 111], function($key, $item) {
+            return strpos($key, 'u') !== false && $item > 10;
+        }, ARRAY_FILTER_USE_BOTH);
+
+        $this->assertEquals(42, $value);
+    }
+
+    /**
+     * @covers Jasny\array_find
+     */
+    public function testArrayFindWithNotFound()
+    {
+        $value = array_find(['foo' => 8, 'wuz' => 42, 'bar' => 99, 'qux' => 111], function($item) {
+            return $item > 100000;
+        });
+
+        $this->assertFalse($value);
+    }
+
+
+    /**
+     * @covers Jasny\array_find_key
+     */
+    public function testArrayFindKey()
+    {
+        $key = array_find_key(['foo' => 8, 'wuz' => 42, 'bar' => 99, 'qux' => 111], function($item) {
+            return $item > 10 && $item < 100;
+        });
+
+        $this->assertEquals('wuz', $key);
+    }
+
+    /**
+     * @covers Jasny\array_find_key
+     */
+    public function testArrayFindKeyWithKey()
+    {
+        $key = array_find_key(['foo' => 8, 'wuz' => 42, 'bar' => 99, 'qux' => 111], function($key) {
+            return strpos($key, 'u') !== false;
+        }, ARRAY_FILTER_USE_KEY);
+
+        $this->assertEquals('wuz', $key);
+    }
+
+    /**
+     * @covers Jasny\array_find_key
+     */
+    public function testArrayFindKeyWithBoth()
+    {
+        $key = array_find_key(['foo' => 8, 'bar' => 99, 'wuz' => 42, 'qux' => 111], function($key, $item) {
+            return strpos($key, 'u') !== false && $item > 10;
+        }, ARRAY_FILTER_USE_BOTH);
+
+        $this->assertEquals('wuz', $key);
+    }
+
+    /**
+     * @covers Jasny\array_find_key
+     */
+    public function testArrayFindKeyWithNotFound()
+    {
+        $key = array_find_key(['foo' => 8, 'wuz' => 42, 'bar' => 99, 'qux' => 111], function($item) {
+            return $item > 100000;
+        });
+
+        $this->assertFalse($key);
+    }
+
 
     public function arrayFlattenGlueProvider()
     {
