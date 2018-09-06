@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Jasny;
 
 /**
@@ -8,9 +10,10 @@ namespace Jasny;
  * @param callable $callback
  * @param array    $params_arr
  * @return mixed
- * @throws RuntimeException
+ * @throws \BadFunctionCallException
+ * @throws \ReflectionException
  */
-function call_user_func_assoc($callback, array $params_arr)
+function call_user_func_assoc(callable $callback, array $params_arr)
 {
     $refl = is_array($callback)
         ? new \ReflectionMethod($callback[0], $callback[1])
@@ -30,23 +33,9 @@ function call_user_func_assoc($callback, array $params_arr)
             $args[] = $param->isDefaultValueAvailable() ? $param->getDefaultValue() : null;
         } else {
             $fn = $refl instanceof \ReflectionMethod ? $refl->class . '::' . $refl->name : $refl->name;
-            throw new \RuntimeException("Missing argument '$key' for {$fn}()");
+            throw new \BadFunctionCallException("Missing argument '$key' for {$fn}()");
         }
     }
     
     return call_user_func_array($callback, array_slice($args, 0, $max));
-}
-
-/**
- * Alias of call_user_func_assoc
- * @deprecated
- *
- * @param callable $callback
- * @param array    $params_arr
- * @return mixed
- * @throws RuntimeException
- */
-function call_user_func_named_array($callback, array $params_arr)
-{
-    return call_user_func_assoc($callback, $params_arr);
 }
