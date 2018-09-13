@@ -312,7 +312,7 @@ class ArrayFunctionsTest extends TestCase
      */
     public function testArrayFindWithBoth()
     {
-        $value = array_find(['foo' => 8, 'bar' => 99, 'wuz' => 42, 'qux' => 111], function($key, $item) {
+        $value = array_find(['foo' => 8, 'bar' => 99, 'wuz' => 42, 'qux' => 111], function($item, $key) {
             return strpos($key, 'u') !== false && $item > 10;
         }, ARRAY_FILTER_USE_BOTH);
 
@@ -361,7 +361,7 @@ class ArrayFunctionsTest extends TestCase
      */
     public function testArrayFindKeyWithBoth()
     {
-        $key = array_find_key(['foo' => 8, 'bar' => 99, 'wuz' => 42, 'qux' => 111], function($key, $item) {
+        $key = array_find_key(['foo' => 8, 'bar' => 99, 'wuz' => 42, 'qux' => 111], function($item, $key) {
             return strpos($key, 'u') !== false && $item > 10;
         }, ARRAY_FILTER_USE_BOTH);
 

@@ -146,7 +146,7 @@ function array_contains_any_assoc(array $array, array $subset, bool $strict = fa
 function array_find(array $array, callable $callback, int $flag = 0)
 {
     foreach ($array as $key => $value) {
-        $args = $flag === ARRAY_FILTER_USE_BOTH ? [$key, $value] :
+        $args = $flag === ARRAY_FILTER_USE_BOTH ? [$value, $key] :
             ($flag === ARRAY_FILTER_USE_KEY ? [$key] : [$value]);
 
         if ($callback(...$args)) {
@@ -171,7 +171,7 @@ function array_find(array $array, callable $callback, int $flag = 0)
 function array_find_key(array $array, callable $callback, int $flag = 0)
 {
     foreach ($array as $key => $value) {
-        $args = $flag === ARRAY_FILTER_USE_BOTH ? [$key, $value] :
+        $args = $flag === ARRAY_FILTER_USE_BOTH ? [$value, $key] :
             ($flag === ARRAY_FILTER_USE_KEY ? [$key] : [$value]);
 
         if ($callback(...$args)) {
