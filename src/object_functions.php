@@ -20,9 +20,7 @@ function object_get_properties($object, bool $dynamic = false): array
 
     if (!$dynamic) {
         $class = get_class($object);
-        $props = array_keys(get_class_vars($class));
-
-        $data = array_only($data, $props);
+        $data = array_intersect_key($data, get_class_vars($class));
     }
 
     return $data;
@@ -42,9 +40,7 @@ function object_set_properties($object, array $data, bool $dynamic = false): voi
 
     if (!$dynamic) {
         $class = get_class($object);
-        $props = array_keys(get_class_vars($class));
-
-        $data = array_only($data, $props);
+        $data = array_intersect_key($data, get_class_vars($class));
     }
 
     foreach ($data as $key => $value) {
