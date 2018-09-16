@@ -137,7 +137,7 @@ function array_contains_any_assoc(array $array, array $subset, bool $strict = fa
  * @see array_filter()
  *
  * Returns the value or FALSE if no element was found.
-     *
+ *
  * @param array    $array
  * @param callable $callback
  * @param int      $flag      Flag determining what arguments are sent to callback
