@@ -222,6 +222,8 @@ class TypeFunctionsTest extends TestCase
     
     public function expectTypeProvider()
     {
+        $streamResource = fopen('data://text/plain,a', 'r');
+
         $closedResource = fopen('php://memory', 'r+');
         fclose($closedResource);
 
@@ -234,7 +236,10 @@ class TypeFunctionsTest extends TestCase
             ['foo', 'int', "Expected int, string given"],
             ['foo', ['int', 'boolean'], "Expected int or boolean, string given"],
             [(object)[], 'Foo', "Expected Foo object, stdClass object given"],
-            [fopen('data://text/plain,hello', 'r'), 'string', "Expected string, stream resource given"],
+            [$streamResource, 'resource'],
+            [$streamResource, 'stream resource'],
+            [$streamResource, 'string', "Expected string, stream resource given"],
+            [$streamResource, 'gd resource', "Expected gd resource, stream resource given"],
             [$closedResource, 'string', "Expected string, resource (closed) given"]
         ];
     }

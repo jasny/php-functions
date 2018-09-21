@@ -128,21 +128,25 @@ function get_type_description($var): string
  */
 function expect_type($var, $type, string $throwable = \TypeError::class, string $message = null): void
 {
-    $strTypes = [];
     $types = is_scalar($type) ? [$type] : $type;
 
-    foreach ($types as $curtype) {
-        $fn = $curtype === 'boolean' ? 'is_bool' : 'is_' . $curtype;
-        $internal = function_exists($fn);
-        
-        if ($internal ? $fn($var) : is_a($var, $curtype)) {
+    foreach ($types as &$curType) {
+        if (str_ends_with($curType, ' resource')) {
+            $valid = is_resource($var) && get_resource_type($var) === substr($curType, 0, -9);
+        } else {
+            $fn = $curType === 'boolean' ? 'is_bool' : 'is_' . $curType;
+            $internal = function_exists($fn);
+
+            $valid = $internal ? $fn($var) : is_a($var, $curType);
+            $curType .= $internal ? '' : ' object';
+        }
+
+        if ($valid) {
             return; // Valid type
         }
-        
-        $strTypes[] = $curtype . ($internal ? '' : ' object');
     }
     
-    $message = $message ?: "Expected " . array_join_pretty(', ', ' or ', $strTypes) . ", %s given";
+    $message = $message ?: "Expected " . array_join_pretty(', ', ' or ', $types) . ", %s given";
     $varType = get_type_description($var);
 
     throw new $throwable(sprintf($message, $varType));

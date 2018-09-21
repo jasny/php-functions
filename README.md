@@ -86,7 +86,10 @@ Get the type of a variable in a descriptive way. E.g. "stream resource" and "Dat
 
     expect_type(mixed $var, string|string[] $type, string $throwable = null, string $message = null)
     
-Validate that an argument has a specific type. 
+Validate that an argument has a specific type.
+
+As type you can specify any internal type, including `callable` and `object`, a class name or a resource type (eg
+`stream resource`). _Typed arrays are **not** supported._
 
 By default a `TypeError` (PHP 7) is thrown. You can specify a class name for any `Throwable` class. For PHP 5 you must
 specify the class name.
