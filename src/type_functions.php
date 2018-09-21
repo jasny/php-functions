@@ -95,6 +95,28 @@ function arrayify($var)
 }
 
 /**
+ * Get the type of a variable in a descriptive way.
+ *
+ * @param mixed $var
+ * @return string
+ */
+function get_type_description($var): string
+{
+    switch (gettype($var)) {
+        case 'double':
+            return 'float';
+        case 'object':
+            return get_class($var) . " object";
+        case 'resource':
+            return get_resource_type($var) . " resource";
+        case 'unknown type':
+            return "resource (closed)"; // BC PHP 7.1
+        default:
+            return gettype($var);
+    }
+}
+
+/**
  * Check that an argument has a specific type, otherwise throw an exception.
  *
  * @param mixed           $var
@@ -108,7 +130,7 @@ function expect_type($var, $type, string $throwable = \TypeError::class, string 
 {
     $strTypes = [];
     $types = is_scalar($type) ? [$type] : $type;
-    
+
     foreach ($types as $curtype) {
         $fn = $curtype === 'boolean' ? 'is_bool' : 'is_' . $curtype;
         $internal = function_exists($fn);
@@ -121,7 +143,7 @@ function expect_type($var, $type, string $throwable = \TypeError::class, string 
     }
     
     $message = $message ?: "Expected " . array_join_pretty(', ', ' or ', $strTypes) . ", %s given";
-    $varType = (is_object($var) ? get_class($var) . " " : "") . gettype($var);
-    
+    $varType = get_type_description($var);
+
     throw new $throwable(sprintf($message, $varType));
 }

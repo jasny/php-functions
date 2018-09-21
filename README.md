@@ -76,6 +76,12 @@ Turn an associated array into a `stdClass` object recursively.
 
 Turn an `stdClass` object into an associated array recursively.
 
+#### get\_type\_description
+
+    string get_type_description(mixed $var)
+    
+Get the type of a variable in a descriptive way. E.g. "stream resource" and "DateTime object".
+
 #### expect\_type
 
     expect_type(mixed $var, string|string[] $type, string $throwable = null, string $message = null)

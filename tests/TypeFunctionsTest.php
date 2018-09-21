@@ -2,6 +2,7 @@
 
 namespace Jasny\Tests;
 
+use function Jasny\get_type_description;
 use PHPStan\Testing\TestCase;
 
 use function Jasny\expect_type;
@@ -190,9 +191,40 @@ class TypeFunctionsTest extends TestCase
         arrayify($object);
     }
 
+    public function typeDescriptionProvider()
+    {
+        $closedResource = fopen('php://memory', 'r+');
+        fclose($closedResource);
+
+        return [
+            [10, 'integer'],
+            [10.2, 'float'],
+            [true, 'boolean'],
+            [[], 'array'],
+            [(object)[], 'stdClass object'],
+            [new \DateTime(), 'DateTime object'],
+            [fopen('data://text/plain,hello', 'r'), 'stream resource'],
+            [$closedResource, 'resource (closed)']
+        ];
+    }
+
+    /**
+     * @covers Jasny\get_type_description
+     * @dataProvider typeDescriptionProvider
+     */
+    public function testGetTypeDescription($var, $expected)
+    {
+        $type = get_type_description($var);
+
+        $this->assertSame($expected, $type);
+    }
+
     
     public function expectTypeProvider()
     {
+        $closedResource = fopen('php://memory', 'r+');
+        fclose($closedResource);
+
         return [
             [10, 'int'],
             [true, 'bool'],
@@ -202,6 +234,8 @@ class TypeFunctionsTest extends TestCase
             ['foo', 'int', "Expected int, string given"],
             ['foo', ['int', 'boolean'], "Expected int or boolean, string given"],
             [(object)[], 'Foo', "Expected Foo object, stdClass object given"],
+            [fopen('data://text/plain,hello', 'r'), 'string', "Expected string, stream resource given"],
+            [$closedResource, 'string', "Expected string, resource (closed) given"]
         ];
     }
     
