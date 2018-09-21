@@ -229,7 +229,9 @@ class TypeFunctionsTest extends TestCase
 
         return [
             [10, 'int'],
+            [10, 'integer'],
             [true, 'bool'],
+            [true, 'boolean'],
             [[], 'array'],
             [(object)[], 'stdClass'],
             [10, ['int', 'boolean']],
@@ -238,8 +240,11 @@ class TypeFunctionsTest extends TestCase
             [(object)[], 'Foo', "Expected Foo object, stdClass object given"],
             [$streamResource, 'resource'],
             [$streamResource, 'stream resource'],
+            [$streamResource, ['stream resource', 'gd resource']],
             [$streamResource, 'string', "Expected string, stream resource given"],
             [$streamResource, 'gd resource', "Expected gd resource, stream resource given"],
+            [$streamResource, ['int', 'gd resource'], "Expected int or gd resource, stream resource given"],
+            [$streamResource, 'stream', "Expected stream object, stream resource given"],
             [$closedResource, 'string', "Expected string, resource (closed) given"]
         ];
     }
