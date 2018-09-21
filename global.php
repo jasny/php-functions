@@ -46,7 +46,7 @@ function array_find_key(array $array, $callback, $flag = 0)
  * @see array_filter()
  *
  * Returns the value or FALSE if no element was found.
-     *
+ *
  * @param array    $array
  * @param callable $callback
  * @param int      $flag      Flag determining what arguments are sent to callback
@@ -409,6 +409,17 @@ function str_starts_with($string, $substr)
 function expect_type($var, $type, $throwable = 'TypeError', $message = NULL)
 {
     return jasny\expect_type($var, $type, $throwable, $message);
+}
+
+/**
+ * Get the type of a variable in a descriptive way.
+ *
+ * @param mixed $var
+ * @return string
+ */
+function get_type_description($var)
+{
+    return jasny\get_type_description($var);
 }
 
 /**

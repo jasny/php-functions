@@ -142,7 +142,7 @@ function expect_type($var, $type, string $throwable = \TypeError::class, string 
         }
 
         if ($valid) {
-            return; // Valid type
+            return;
         }
     }
     
