@@ -360,15 +360,7 @@ Match path against wildcard pattern. This is an extended version of [fnmatch](ht
 Call a callback with named parameters as associative array.
 
 ## Object functions
-    
-#### object\_get\_properties
-
-    array object_get_properties(object $object)
-
-Get the public properties of an object.
-
-Unlike `get_object_vars`, this method will return only public properties regardless of the scope.
-    
+   
 #### object\_get\_properties
 
     array object_get_properties(object $object, bool $dynamic = true)
