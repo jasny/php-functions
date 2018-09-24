@@ -37,6 +37,17 @@ function is_numeric_array($var): bool
 }
 
 /**
+ * Check if variable is a string or can be cast to a string.
+ *
+ * @param mixed $var
+ * @return bool
+ */
+function is_stringable($var): bool
+{
+    return (is_scalar($var) && !is_bool($var)) || (is_object($var) && method_exists($var, '__toString'));
+}
+
+/**
  * Turn associated array into stdClass object recursively.
  *
  * @param array|mixed $var

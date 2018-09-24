@@ -64,6 +64,13 @@ Check if variable is an associative array.
 
 Check if variable is a numeric array.
 
+#### is\_stringable
+
+    boolean is_stringable(mixed $var)
+    
+Check if variable can be cast to a string. Returns true for all scalar values except booleans and objects that have a
+`__toString` method.
+
 #### objectify
 
     stdClass|mixed objectify(array|mixed $var)

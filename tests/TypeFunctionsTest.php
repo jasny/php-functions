@@ -3,6 +3,7 @@
 namespace Jasny\Tests;
 
 use function Jasny\get_type_description;
+use function Jasny\is_stringable;
 use PHPStan\Testing\TestCase;
 
 use function Jasny\expect_type;
@@ -20,7 +21,7 @@ class TypeFunctionsTest extends TestCase
     const NONE = 0;
     const NUMERIC = 1;
     const ASSOC = 2;
-    
+
     public function varProvider()
     {
         return [
@@ -34,31 +35,54 @@ class TypeFunctionsTest extends TestCase
             [(object)['a' => 'b'], self::NONE]
         ];
     }
-    
+
     /**
-     * @covers Jasny\is_associative_array
+     * @covers \Jasny\is_associative_array
      * @dataProvider varProvider
-     * 
+     *
      * @param mixed $var
-     * @param int   $type
+     * @param int $type
      */
     public function testIsAssociativeArray($var, $type)
     {
         $this->assertEquals($type === self::ASSOC, is_associative_array($var));
     }
-    
+
     /**
-     * @covers Jasny\is_numeric_array
+     * @covers \Jasny\is_numeric_array
      * @dataProvider varProvider
-     * 
+     *
      * @param mixed $var
-     * @param int   $type
+     * @param int $type
      */
     public function testIsNumericArray($var, $type)
     {
         $this->assertEquals($type === self::NUMERIC, is_numeric_array($var));
     }
-    
+
+    public function stringableProvider()
+    {
+        return [
+            [null, false],
+            [true, false],
+            ['', true],
+            ['foo', true],
+            [0, true],
+            [42, true],
+            [1.23, true],
+            [(object)['a' => 'b'], false],
+            [new class() { function __toString() { return 'f'; } }, true]
+        ];
+    }
+
+    /**
+     * @covers \Jasny\is_stringable
+     * @dataProvider stringableProvider
+     */
+    public function testIsStringable($var, $expected)
+    {
+        $this->assertSame($expected, is_stringable($var));
+    }
     
     public function objectifyProvider()
     {
@@ -99,7 +123,7 @@ class TypeFunctionsTest extends TestCase
     }
     
     /**
-     * @covers Jasny\objectify
+     * @covers \Jasny\objectify
      * @dataProvider objectifyProvider
      * 
      * @param mixed $var
@@ -142,7 +166,7 @@ class TypeFunctionsTest extends TestCase
     }
     
     /**
-     * @covers Jasny\arrayify
+     * @covers \Jasny\arrayify
      * @dataProvider arrayifyProvider
      * 
      * @param mixed $var
@@ -168,7 +192,7 @@ class TypeFunctionsTest extends TestCase
     }
     
     /**
-     * @covers Jasny\objectify
+     * @covers \Jasny\objectify
      * @dataProvider circularReferenceProvider
      * 
      * @expectedException \OverflowException
@@ -180,7 +204,7 @@ class TypeFunctionsTest extends TestCase
     }
     
     /**
-     * @covers Jasny\arrayify
+     * @covers \Jasny\arrayify
      * @dataProvider circularReferenceProvider
      * 
      * @expectedException \OverflowException
@@ -209,7 +233,7 @@ class TypeFunctionsTest extends TestCase
     }
 
     /**
-     * @covers Jasny\get_type_description
+     * @covers \Jasny\get_type_description
      * @dataProvider typeDescriptionProvider
      */
     public function testGetTypeDescription($var, $expected)
@@ -250,7 +274,7 @@ class TypeFunctionsTest extends TestCase
     }
     
     /**
-     * @covers Jasny\expect_type
+     * @covers \Jasny\expect_type
      * @dataProvider expectTypeProvider
      * 
      * @param mixed           $var
@@ -270,7 +294,7 @@ class TypeFunctionsTest extends TestCase
     }
     
     /**
-     * @covers Jasny\expect_type
+     * @covers \Jasny\expect_type
      * 
      * @expectedException Exception
      * @expectedExceptionMessage Lorem ipsum string black
