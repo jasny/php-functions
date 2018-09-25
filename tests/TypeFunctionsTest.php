@@ -303,4 +303,15 @@ class TypeFunctionsTest extends TestCase
     {
         expect_type('foo', 'int', \Exception::class, "Lorem ipsum %s black");
     }
+
+    /**
+     * @covers \Jasny\expect_type
+     *
+     * @expectedException Exception
+     * @expectedExceptionMessage Lorem int ipsum string black
+     */
+    public function testExpectTypeExplicitMessageType()
+    {
+        expect_type('foo', 'int', \Exception::class, 'Lorem %2$s ipsum %1$s black');
+    }
 }

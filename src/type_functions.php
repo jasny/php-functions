@@ -156,9 +156,9 @@ function expect_type($var, $type, string $throwable = \TypeError::class, string 
             return;
         }
     }
-    
-    $message = $message ?: "Expected " . array_join_pretty(', ', ' or ', $types) . ", %s given";
+
+    $message = $message ?? 'Expected %2$s, %1$s given';
     $varType = get_type_description($var);
 
-    throw new $throwable(sprintf($message, $varType));
+    throw new $throwable(sprintf($message, $varType, array_join_pretty(', ', ' or ', $types)));
 }
