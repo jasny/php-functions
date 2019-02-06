@@ -18,6 +18,10 @@ $found = str_contains($string, 'foo') && array_contains($array, ['all', 'of', 't
 $found = strpos($string, 'foo') !== false && count(array_intersect($array, ['all', 'of', 'these'])) === 3;
 ```
 
+### But wait, there's more...
+
+If you like these functions, you'll love the [Improved PHP library](https://github.com/improved-php-library). Go and check it out.
+
 ## Installation
 
     composer require jasny\php-functions
