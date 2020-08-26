@@ -17,7 +17,7 @@
     "require": {
         "php": ">=5.4",
         "ramsey/array_column": "^1.1",
-        "mikey179/vfsStream": "^1.5"
+        "mikey179/vfsstream": "^1.5"
     },
     "require-dev": {
         "jasny/php-code-quality": "^1.1"
